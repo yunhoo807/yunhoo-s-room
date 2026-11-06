@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ㅇㅎ의 은밀한 방 물건 Store</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jua&display=swap">
+<style>
+:root{--bg:#fff;--card:#f3f3f1;--ink:#111;--mut:#6d6d68;--line:#e2e2de;--red:#ff3b2f;--or:#ff8a00;
+--h:'Jua','Apple SD Gothic Neo','Malgun Gothic',sans-serif;--b:'Apple SD Gothic Neo','Malgun Gothic','Noto Sans KR',system-ui,sans-serif;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root[data-theme="dark"]{--bg:#0e0e0e;--card:#1b1b1a;--ink:#f4f4f0;--mut:#9a9a94;--line:#2c2c2a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 var(--b)}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--or);outline-offset:2px}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:2px solid var(--ink);display:flex;flex-wrap:wrap;align-items:center;gap:8px 16px;padding:10px 20px}
+.logo{font-family:var(--h);font-size:20px;line-height:1.1}
+.logo i{font-style:normal;background:var(--or);color:#111;border-radius:6px;padding:1px 7px;margin-left:6px;font-size:14px}
+.logo span{cursor:pointer;user-select:none}
+.modes{display:flex;border:2px solid var(--ink);border-radius:999px;overflow:hidden;margin-left:auto}
+.mode{border:0;background:none;padding:5px 16px;cursor:pointer;font-weight:800}
+.mode.on{background:var(--ink);color:var(--bg)}
+.nav{display:flex;gap:2px;align-items:center;flex-wrap:wrap}
+.nav a,.nav button{background:none;border:0;cursor:pointer;padding:6px 9px;border-radius:8px;font-weight:600}
+.nav a:hover,.nav button:hover{background:var(--card)}
+main{max-width:1040px;margin:0 auto;padding:20px}
+.hero{position:relative;overflow:hidden;padding:44px 0 36px;margin-bottom:8px}
+.hero h1{font-family:var(--h);font-weight:400;font-size:clamp(44px,11vw,112px);line-height:1;letter-spacing:-.02em;margin:0 0 16px;position:relative;z-index:1}
+.hero p{margin:0;font-size:17px;color:var(--mut);max-width:34ch;position:relative;z-index:1}
+.kh{position:absolute;right:-30px;top:10px;width:min(34vw,260px);aspect-ratio:1/1.5}
+.kh::before{content:"";position:absolute;left:0;right:0;top:0;aspect-ratio:1;border-radius:50%;background:var(--or)}
+.kh::after{content:"";position:absolute;left:34%;right:34%;top:46%;bottom:0;background:var(--or);clip-path:polygon(25% 0,75% 0,100% 100%,0 100%)}
+.kh i{position:absolute;left:50%;top:25%;width:26%;aspect-ratio:1;border-radius:50%;background:var(--bg);transform:translateX(-50%);z-index:2}
+.kh b{position:absolute;left:44%;right:44%;top:40%;height:34%;background:var(--bg);z-index:2;clip-path:polygon(20% 0,80% 0,100% 100%,0 100%)}
+input,select,textarea{background:var(--card);border:2px solid transparent;border-radius:12px;padding:10px 14px;width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--ink);outline:none}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:12px 0 22px}
+.chip{border:2px solid var(--line);background:none;border-radius:999px;padding:3px 14px;cursor:pointer}
+.chip.on{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px 16px}
+.th{aspect-ratio:1;border-radius:18px;display:grid;place-items:center;font-size:72px;position:relative;background:var(--card)}
+.card:hover .th{outline:3px solid var(--ink)}
+.th img{width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+.tn{width:64px;height:64px;object-fit:cover;border-radius:10px;cursor:pointer;border:2px solid var(--line)}
+.row>input{flex:1;min-width:0}
+.sold{position:absolute;inset:0;border-radius:18px;background:rgba(0,0,0,.6);color:#fff;display:grid;place-items:center;font-weight:800}
+.cb{padding:8px 2px}
+.cb h3{margin:0;font-size:15px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cb b{font-family:var(--h);font-size:20px;font-weight:400}
+.cb small{display:block;color:var(--mut)}
+.btn{background:var(--ink);color:var(--bg);border:0;border-radius:12px;padding:11px 20px;font-weight:800;cursor:pointer}
+.btn.r{background:var(--red);color:#fff}.btn.gh{background:none;color:var(--ink);border:2px solid var(--line)}.btn.sm{padding:3px 11px;font-size:13px;border-radius:8px}.btn.red{background:#d62b20;color:#fff}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.sb{display:flex;align-items:center;gap:12px;width:100%;background:none;border:2px solid var(--ink);border-radius:12px;padding:11px 14px;font-weight:800;cursor:pointer;text-align:left}
+.sb:hover{background:var(--card)}
+.sb s{text-decoration:none;display:grid;place-items:center;width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--bg);font-size:12px;font-weight:800}
+.panel{background:var(--card);border-radius:20px;padding:22px;margin-bottom:16px}
+.panel h2{font-family:var(--h);font-weight:400;margin:0 0 12px;font-size:26px}
+.panel input,.panel select,.panel textarea{background:var(--bg)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.f{display:grid;gap:10px;max-width:440px}
+label{font-weight:800;font-size:13px;color:var(--mut)}
+.det{display:grid;grid-template-columns:1fr 1fr;gap:28px}
+.det .th{font-size:140px;border-radius:24px}
+.price{font-family:var(--h);font-size:34px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.stat{background:var(--card);border-radius:16px;padding:16px}
+.stat b{font-family:var(--h);font-size:30px;font-weight:400;display:block}
+.tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{text-align:left;padding:9px 8px;border-bottom:1px solid var(--line);font-size:14px;vertical-align:top}
+.tag{display:inline-block;padding:0 9px;border-radius:8px;background:var(--ink);color:var(--bg);font-size:12px;font-weight:800}
+.tag.x{background:var(--red);color:#fff}.tag.off{background:var(--line);color:var(--mut)}
+.empty{text-align:center;color:var(--mut);padding:56px 10px}
+.empty h2{font-family:var(--h);font-weight:400;font-size:28px;color:var(--ink);margin:0 0 6px}
+.or{display:flex;align-items:center;gap:10px;color:var(--mut);margin:14px 0}
+.or::before,.or::after{content:"";flex:1;height:1px;background:var(--line)}
+#bc{height:320px;overflow:auto;background:var(--bg);border-radius:14px;padding:8px 12px;margin-bottom:10px}
+#cc{height:340px;overflow:auto;background:var(--bg);border-radius:14px;padding:8px 12px;margin-bottom:10px}
+.bub{max-width:82%;padding:8px 13px;border-radius:16px;margin:6px 0;background:var(--card)}
+.bub.u{margin-left:auto;background:var(--ink);color:var(--bg)}
+#toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 20px;border-radius:999px;font-weight:700;z-index:50;opacity:0;pointer-events:none;transition:opacity .2s}
+#toast.on{opacity:1}
+dialog{border:0;border-radius:20px;padding:22px;max-width:420px;width:92%;background:var(--bg);color:var(--ink)}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+@media (max-width:640px){.det{grid-template-columns:1fr}.modes{margin-left:0}.kh{opacity:.18}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+.sb .lg{display:grid;place-items:center;width:26px;height:26px}.sb .lg svg{width:20px;height:20px}
+.bub{white-space:pre-wrap;overflow-wrap:anywhere}
+.ft{margin-top:90px;border-top:1px solid var(--line);background:var(--card);padding:32px 20px calc(36px + env(safe-area-inset-bottom,0px))}
+.ft-in{max-width:1100px;margin:0 auto}.ft-top{display:flex;flex-wrap:wrap;gap:14px 28px;justify-content:space-between;align-items:center}
+.ft-brand{font-family:var(--h);font-weight:400;font-size:20px}.ft-brand i{font-style:normal;color:var(--mut);font-size:14px;margin-left:6px}
+.ft-nav{display:flex;flex-wrap:wrap;gap:6px 18px}.ft-nav button{background:none;border:0;padding:4px 0;color:var(--mut);font:inherit;font-size:13px;cursor:pointer}.ft-nav button:hover{color:var(--ink);text-decoration:underline}
+.ft-badges{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}.ft-badges span{border:1px solid var(--line);border-radius:999px;padding:5px 12px;font-size:12px;color:var(--mut)}.ft-copy{margin:0;font-size:12px;color:var(--mut)}
+</style>
+</head>
+<body>
+<header id="hd"></header>
+<main id="app"></main>
+<footer class="ft"><div class="ft-in"><div class="ft-top"><b class="ft-brand">ㅇㅎ의 은밀한 방 <i>물건 Store</i></b><nav class="ft-nav" aria-label="정책"><button onclick="docDlg('privacy')"><b>개인정보처리방침</b></button><button onclick="docDlg('terms')">이용약관</button><button onclick="docDlg('rules')">운영정책</button><button onclick="docDlg('safe')">안전거래 가이드</button><button onclick="go('support')">고객센터</button></nav></div><div class="ft-badges"><span>🔒 비밀번호 암호화 저장</span><span>🛡️ 안전거래 가이드 제공</span><span>📱 휴대폰 인증 가입</span><span>💬 1:1 고객센터 운영</span></div><p class="ft-copy">© 2026 ㅇㅎ의 은밀한 방 물건 Store. All rights reserved.</p></div></footer>
+<dialog id="dlg"></dialog>
+<div id="toast" role="status"></div>
+<script>
+var CATS=['전체','전자기기','패션','생활용품','가구','도서','취미·스포츠','뷰티','기타'];
+var EMO=['📦','🎧','⌚','👟','👜','📱','💻','📚','🪑','🎒','🚲','🧥'];
+var BGS=['#ffe3e0','#e3ecff','#fff3c4','#dcf5e8'];
+var GR=[['S','S · 거의 새것'],['A','A · 상태 아주 좋음'],['B','B · 사용감 조금 있음'],['C','C · 사용감 많음'],['D','D · 하자·흠집 있음']];
+var LOGO={
+google:'<svg viewBox="0 0 18 18" aria-hidden="true"><path fill="#4285F4" d="M17.64 9.2045c0-.6381-.0573-1.2518-.1636-1.8409H9v3.4814h4.8436c-.2086 1.125-.8427 2.0782-1.7959 2.7164v2.2581h2.9087c1.7018-1.5668 2.6836-3.874 2.6836-6.615z"/><path fill="#34A853" d="M9 18c2.43 0 4.4673-.806 5.9564-2.1805l-2.9087-2.2581c-.8059.54-1.8368.859-3.0477.859-2.344 0-4.3282-1.5831-5.036-3.7104H.9574v2.3318C2.4382 15.9832 5.4818 18 9 18z"/><path fill="#FBBC05" d="M3.964 10.71c-.18-.54-.2822-1.1168-.2822-1.71s.1023-1.17.2823-1.71V4.9582H.9573A8.9965 8.9965 0 000 9c0 1.4523.3477 2.8268.9573 4.0418L3.964 10.71z"/><path fill="#EA4335" d="M9 3.5795c1.3214 0 2.5077.4541 3.4405 1.346l2.5813-2.5814C13.4636.8918 11.4264 0 9 0 5.4818 0 2.4382 2.0168.9573 4.9582L3.964 7.29C4.6718 5.1627 6.656 3.5795 9 3.5795z"/></svg>',
+apple:'<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701"/></svg>',
+github:'<svg viewBox="0 0 16 16" aria-hidden="true" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>'};
+var PV={google:['Google','G'],apple:['Apple','A'],github:['GitHub','GH']};
+var REG=['서울','부산','대구','인천','광주','대전','울산','세종','경기','강원','충북','충남','전북','전남','경북','경남','제주'];
+var STP=['결제완료','배송준비중','배송중','배송완료'],STS=['입금대기'].concat(STP,['취소']);
+var IQC=['주문·배송','결제·환불','중고거래','계정','기타'];
+var db=null,q='',cat='전체',reg='전체',atab='dash',authMode='login',stab='bot',photos=[],sPhone=null,co=null;
+try{var r=localStorage.getItem('oh_db_v3');if(r)db=JSON.parse(r)}catch(e){}
+if(!db)db={mode:'used',session:null,nid:100,users:[],products:[],orders:[],carts:{},msgs:[]};
+db.inq=db.inq||[];db.reviews=db.reviews||[];db.mails=db.mails||[];db.rooms=db.rooms||[];db.theme=db.theme||'light';db.logs=db.logs||[];
+if(!db.purge1){var ADM=db.users.filter(function(u){return u.role==='admin'}).map(function(u){return u.id}),KP=function(id){return id===0||ADM.indexOf(id)>-1};
+ db.users=db.users.filter(function(u){return ADM.indexOf(u.id)>-1});
+ db.products=db.products.filter(function(p){return KP(p.seller)});db.products.forEach(function(p){p.likedBy=(p.likedBy||[]).filter(KP)});
+ db.orders=db.orders.filter(function(o){return KP(o.uid)});db.rooms=db.rooms.filter(function(r){return KP(r.a)&&KP(r.b)});
+ db.mails=db.mails.filter(function(m){return KP(m.to)});db.reviews=db.reviews.filter(function(r){return KP(r.from)&&KP(r.to)});
+ db.inq=db.inq.filter(function(x){return KP(x.uid)});Object.keys(db.carts||{}).forEach(function(k){if(!KP(+k))delete db.carts[k]});
+ if(db.session&&ADM.indexOf(db.session)<0)db.session=null;db.logs=[];db.purge1=1;
+ try{localStorage.setItem('oh_db_v3',JSON.stringify(db))}catch(e){}}
+if(!db.seed3){var t0=Date.now();db.products.push({id:db.nid++,type:'used',title:'테스트',price:1000,cat:'기타',emoji:'📦',bg:BGS[0],region:'서울',area:'테스트동',imgs:[],stock:1,desc:'중고거래 테스트용 물건이에요. 1,000원.',seller:0,likes:0,sold:false,created:t0},{id:db.nid++,type:'new',title:'테스트',price:1000,cat:'기타',emoji:'📦',bg:BGS[1],region:'',area:'',imgs:[],stock:100,desc:'새상품 주문 테스트용 물건이에요. 1,000원.',seller:0,likes:0,sold:false,created:t0});db.seed3=1;save()}
+var ADMIN_ID="admin'#",admP=null;
+function ensureAdmin(){return admP||(admP=(async function(){
+ var ad=db.users.find(function(x){return x.role==='admin'});
+ if(!ad){var s=newSalt();db.users.push({id:db.nid++,username:ADMIN_ID,salt:s,pw:await hp('admin1234',s),nick:'관리자',role:'admin',provider:'local',banned:false,joined:Date.now()});db.admFix1=1;save()}
+ else if(!db.admFix1){var s2=newSalt();ad.username=ADMIN_ID;ad.salt=s2;ad.pw=await hp('admin1234',s2);db.admFix1=1;save()}
+})())}
+ensureAdmin();
+function newSalt(){return Array.from(crypto.getRandomValues(new Uint8Array(16))).map(function(x){return x.toString(16).padStart(2,'0')}).join('')}
+async function hp(pw,salt){var e=new TextEncoder(),k=await crypto.subtle.importKey('raw',e.encode(pw),'PBKDF2',false,['deriveBits']),b=await crypto.subtle.deriveBits({name:'PBKDF2',salt:e.encode(salt),iterations:150000,hash:'SHA-256'},k,256);return Array.from(new Uint8Array(b)).map(function(x){return x.toString(16).padStart(2,'0')}).join('')}
+function applyTheme(){document.documentElement.setAttribute('data-theme',db.theme)}
+applyTheme();
+function save(){try{localStorage.setItem('oh_db_v3',JSON.stringify(db));return true}catch(e){toast('저장 공간이 부족해요. 사진 수를 줄여 보세요');return false}}
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+function num(x){return Number(x).toLocaleString('ko-KR')}
+function fmt(n){return num(n)+'원'}
+function ago(t){var m=Math.floor((Date.now()-t)/60000);if(m<1)return'방금 전';if(m<60)return m+'분 전';var h=Math.floor(m/60);return h<24?h+'시간 전':Math.floor(h/24)+'일 전'}
+function me(){return db.users.find(function(u){return u.id===db.session&&!isBanned(u)})||null}
+function usr(id){var u=db.users.find(function(x){return x.id===id});if(id===0)return'운영팀';return u?u.nick:'(탈퇴)'}
+function prod(id){return db.products.find(function(p){return p.id===id})}
+function toast(m){var t=document.getElementById('toast');t.textContent=m;t.className='on';clearTimeout(toast.h);toast.h=setTimeout(function(){t.className=''},2200)}
+function go(h){location.hash=h}
+function digits(s){return String(s).replace(/\D/g,'')}
+function fmtPh(n){return n.length===11?n.replace(/(\d{3})(\d{4})(\d{4})/,'$1-$2-$3'):n.replace(/(\d{3})(\d{3})(\d{4})/,'$1-$2-$3')}
+function setMode(m){db.mode=m;cat='전체';q='';save();if(location.hash==='#home'||!location.hash)render();else go('home')}
+function theme(){db.theme=db.theme==='dark'?'light':'dark';applyTheme();save()}
+function loginAsk(){return '<div class="empty"><h2>로그인이 필요해요</h2><a class="btn r" href="#login">로그인하기</a></div>'}
+function need(){if(me())return true;toast('로그인이 필요해요');go('login');return false}
+function regOpts(sel,all){return(all?'<option value="전체"'+(sel==='전체'?' selected':'')+'>전체 지역</option>':'')+REG.map(function(r){return '<option'+(r===sel?' selected':'')+'>'+r+'</option>'}).join('')}
+function opts(a,sel){return a.map(function(x){return '<option'+(x===sel?' selected':'')+'>'+x+'</option>'}).join('')}
+function doSearch(f){q=f.q.value.trim();list();return false}
+function thumb(p){return p.imgs&&p.imgs.length?'<img src="'+p.imgs[0]+'" alt="">':p.emoji}
+function loc(p){return esc((p.region?p.region+' ':'')+p.area)}
+function gal(p){if(!(p.imgs&&p.imgs.length))return '<div class="th" style="background:'+p.bg+'">'+p.emoji+'</div>';return '<div><div class="th"><img id="gm" src="'+p.imgs[0]+'" alt=""></div>'+(p.imgs.length>1?'<div class="row" style="margin-top:8px">'+p.imgs.map(function(s,i){return '<img class="tn" src="'+s+'" alt="사진 '+(i+1)+'" onclick="document.getElementById(\'gm\').src=this.src">'}).join('')+'</div>':'')+'</div>'}
+function addPhotos(inp){
+ var fs=Array.prototype.slice.call(inp.files),room=4-photos.length;
+ if(fs.length>room)toast('사진은 최대 4장까지 올릴 수 있어요');
+ fs.slice(0,room).forEach(function(f){
+  if(f.type.indexOf('image/')!==0)return;
+  var fr=new FileReader();fr.onload=function(){var im=new Image();im.onload=function(){var s=Math.min(1,720/Math.max(im.width,im.height)),c=document.createElement('canvas');c.width=Math.round(im.width*s);c.height=Math.round(im.height*s);c.getContext('2d').drawImage(im,0,0,c.width,c.height);photos.push(c.toDataURL('image/jpeg',0.72));prevPhotos()};im.src=fr.result};fr.readAsDataURL(f)});
+ inp.value='';
+}
+function prevPhotos(){var e=document.getElementById('pv');if(e)e.innerHTML=photos.map(function(s,i){return '<span style="position:relative"><img class="tn" src="'+s+'" alt="" style="cursor:default"><button type="button" class="btn sm red" style="position:absolute;top:-6px;right:-6px;padding:0 6px" onclick="photos.splice('+i+',1);prevPhotos()" aria-label="사진 삭제">×</button></span>'}).join('')}
+function head(){
+ var u=me(),cn=u&&db.carts[u.id]?db.carts[u.id].length:0,un=allUnread(),mn=u?db.mails.filter(function(m){return m.to===u.id&&!m.read}).length:0;
+ document.getElementById('hd').innerHTML='<a class="logo" href="#home"><span onclick="logoTap(event)">ㅇㅎ의 은밀한 방</span><i>물건 Store</i></a>'+
+ '<div class="modes"><button class="mode '+(db.mode==='used'?'on':'')+'" onclick="setMode(\'used\')">중고거래</button><button class="mode '+(db.mode==='new'?'on':'')+'" onclick="setMode(\'new\')">새상품</button></div>'+
+ '<nav class="nav"><a href="#store">스토어</a>'+(db.mode==='used'?'<a href="#sell">판매하기</a>':'<a href="#cart">장바구니'+(cn?' ('+num(cn)+')':'')+'</a>')+(u?'<a href="#orders">주문내역</a><a href="#mail">메일'+(tot()?' <span class="tag x">'+num(tot())+'</span>':'')+'</a>':'')+'<a href="#support">고객센터</a>'+
+ (u?'<a href="#me">'+esc(u.nick)+'</a><a href="#account">설정</a>'+(u.role==='admin'?'<a href="#admin">관리자</a>':'')+'<button onclick="logoutDlg()">로그아웃</button>':'<a href="#login">로그인</a>')+
+ '<button onclick="theme()" aria-label="화이트/다크 전환">◐</button></nav>';
+}
+function card(p){return '<a class="card" href="#detail-'+p.id+'"><div class="th" style="background:'+p.bg+'">'+thumb(p)+(p.sold?'<span class="sold">판매완료</span>':(p.type==='new'&&p.stock<1?'<span class="sold">품절</span>':''))+'</div><div class="cb"><h3>'+esc(p.title)+'</h3><b>'+fmt(p.price)+'</b><small>'+(p.type==='used'?(p.grade?p.grade+'급 · ':'')+loc(p)+' · '+ago(p.created):'재고 '+num(p.stock)+'개')+'</small></div></a>'}
+function vHome(){
+ var used=db.mode==='used';
+ return '<section class="hero"><h1>'+(used?'문 열면,<br>이웃의 물건.':'문 열면,<br>새 물건.')+'</h1><p>'+(used?'안 쓰는 물건을 가까운 이웃과 직거래로.':'새상품만 모아둔 방. 담고, 주문하고, 기다리면 끝.')+'</p><div class="kh"><i></i><b></b></div></section>'+
+ '<form class="row" style="flex-wrap:nowrap" onsubmit="return doSearch(this)"><input name="q" type="search" enterkeyhint="search" placeholder="어떤 물건을 찾나요? 입력 후 Enter" value="'+esc(q)+'" aria-label="검색"><button class="btn r">검색</button></form>'+
+ (used?'<select aria-label="지역별 보기" style="margin-top:10px;max-width:240px" onchange="reg=this.value;render()">'+regOpts(reg,true)+'</select>':'')+
+ '<div class="chips">'+CATS.map(function(c){return '<button class="chip '+(c===cat?'on':'')+'" onclick="cat=\''+c+'\';render()">'+c+'</button>'}).join('')+'</div><div id="gl"></div>';
+}
+function list(){
+ var all=db.products.filter(function(p){return p.type===db.mode});
+ var l=all.filter(function(p){return(cat==='전체'||p.cat===cat)&&p.title.indexOf(q)>-1&&(db.mode==='new'||reg==='전체'||p.region===reg)});
+ l.sort(function(a,b){return(a.sold?1:0)-(b.sold?1:0)||b.created-a.created});
+ var e;
+ if(!all.length){var u=me();e=db.mode==='used'?'<div class="empty"><h2>아직 올라온 물건이 없어요</h2><p>첫 번째 판매글의 주인공이 되어 보세요.</p><a class="btn r" href="#sell">첫 물건 올리기</a></div>':'<div class="empty"><h2>아직 진열된 새상품이 없어요</h2><p>관리자가 상품을 등록하면 여기에 나타나요.</p>'+(u&&u.role==='admin'?'<a class="btn r" href="#admin">상품 등록하러 가기</a>':'')+'</div>'}
+ else e='<div class="empty"><h2>찾는 상품이 없어요</h2><p>다른 검색어, 카테고리, 지역을 골라 보세요.</p></div>';
+ document.getElementById('gl').innerHTML=l.length?'<div class="grid">'+l.map(card).join('')+'</div>':e;
+}
+function vDetail(id){
+ var p=prod(id);if(!p)return '<div class="empty"><h2>없는 상품이에요</h2><a class="btn" href="#home">목록으로</a></div>';
+ var used=p.type==='used',out=p.sold||(!used&&p.stock<1);
+ return '<a href="#home" class="chip" style="display:inline-block;margin-bottom:14px">← 목록으로</a><div class="det">'+gal(p)+'<div><span class="tag">'+(used?'중고':'새상품')+'</span> <span class="tag">'+p.cat+'</span>'+(p.grade?' <span class="tag" style="background:var(--or);color:#fff">등급 '+p.grade+'</span>':'')+'<h1 style="font-family:var(--h);font-weight:400;font-size:34px;margin:10px 0">'+esc(p.title)+'</h1><div class="price">'+fmt(p.price)+'</div><p style="color:var(--mut)">'+(used?esc(usr(p.seller))+' '+tBadge(p.seller)+' · '+loc(p)+' · '+ago(p.created)+' · 관심 '+num((p.likedBy||[]).length):'재고 '+num(p.stock)+'개')+'</p><p>'+esc(p.desc)+'</p><div class="row">'+
+ (out?'<button class="btn" disabled>'+(used?'판매완료':'품절')+'</button>':used?'<button class="btn r" onclick="chat('+p.id+')">채팅하기</button><button class="btn gh" onclick="like('+p.id+')">'+((p.likedBy||[]).indexOf(db.session)>-1?'♥ 관심 취소':'♡ 관심')+'</button>':'<button class="btn gh" onclick="addCart('+p.id+')">장바구니 담기</button><button class="btn gh" onclick="chat('+p.id+')">판매자와 채팅</button><button class="btn r" onclick="buyNow('+p.id+')">바로 주문</button>')+rateBtn(p)+'</div></div></div>';
+}
+function like(id){var u=me();if(!u){toast('로그인이 필요해요');go('login');return}var p=prod(id);p.likedBy=p.likedBy||[];var i=p.likedBy.indexOf(u.id);if(i<0){p.likedBy.push(u.id);toast('관심 목록에 담았어요')}else{p.likedBy.splice(i,1);toast('관심을 취소했어요')}save();render()}
+function adminId(){var a=db.users.find(function(u){return u.role==='admin'});return a?a.id:1}
+function room(id){return db.rooms.find(function(r){return r.id===id})}
+function lastT(r){var l=r.msgs[r.msgs.length-1];return l?l.date:0}
+function unread(r,uid){var s=(r.seen||{})[uid]||0;return r.msgs.filter(function(m,i){return i>=s&&m.from!==uid}).length}
+function allUnread(){var u=me();if(!u)return 0;return db.rooms.filter(function(r){return r.a===u.id||r.b===u.id}).reduce(function(s,r){return s+unread(r,u.id)},0)}
+function chat(id){
+ if(!need())return;var p=prod(id);
+ if(p.seller===db.session){toast('내 판매글이에요');return}
+ var r=db.rooms.find(function(x){return x.kind==='item'&&x.pid===id&&x.a===db.session});
+ if(!r){r={id:db.nid++,kind:'item',pid:id,a:db.session,b:p.seller||adminId(),title:p.title,msgs:[],seen:{}};db.rooms.push(r);save()}
+ go('chat-'+r.id)
+}
+function vChats(){
+ var u=me();if(!u)return loginAsk();
+ var rs=db.rooms.filter(function(r){return r.a===u.id||r.b===u.id}).sort(function(x,y){return lastT(y)-lastT(x)});
+ return '<div class="panel"><h2>채팅</h2>'+(rs.length?rs.map(function(r){var o=r.a===u.id?r.b:r.a,l=r.msgs[r.msgs.length-1],n=unread(r,u.id);return '<a href="#chat-'+r.id+'" class="row" style="padding:10px 0;border-top:1px solid var(--line);justify-content:space-between;flex-wrap:nowrap"><span style="min-width:0"><b>'+(r.kind==='inq'?'📩 ':'')+esc(r.title)+'</b> <small style="color:var(--mut)">'+esc(usr(o))+'</small><br><small style="color:var(--mut)">'+(l?esc(l.text.slice(0,40)):'대화를 시작해 보세요')+'</small></span>'+(n?'<span class="tag x">'+num(n)+'</span>':'')+'</a>'}).join(''):'<div class="empty" style="padding:30px"><h2>채팅이 없어요</h2><p>상품 페이지에서 판매자와 채팅을 시작해 보세요.</p></div>')+'</div>';
+}
+function chatSeller(r,u){var p=prod(r.pid);return !!(p&&r.kind==='item'&&p.type==='used'&&!p.sold&&r.b===u.id&&u.id===(p.seller||adminId()))}
+function vChat(id){
+ var u=me();if(!u)return loginAsk();
+ var r=room(id);if(!r||(r.a!==u.id&&r.b!==u.id))return '<div class="empty"><h2>채팅방을 찾을 수 없어요</h2><a class="btn" href="#chat">채팅 목록</a></div>';
+ r.seen=r.seen||{};r.seen[u.id]=r.msgs.length;save();
+ var o=r.a===u.id?r.b:r.a,p=prod(r.pid),sel=chatSeller(r,u);
+ return '<a href="#chat" class="chip" style="display:inline-block;margin-bottom:14px">← 채팅 목록</a><div class="panel"><h2>'+(r.kind==='inq'?'1:1 문의':esc(r.title))+'</h2><p style="margin:0 0 10px;color:var(--mut)">'+esc(usr(o))+(p?' · <a href="#detail-'+p.id+'" style="text-decoration:underline">상품 보기 ('+fmt(p.price)+')</a>':'')+'</p>'+
+ (sel?'<p style="margin:0 0 10px;padding:9px 12px;border-radius:12px;background:var(--bg);border:2px dashed var(--or);font-size:13px">멘션(@)후 ‘구매하기’를 입력하고 전송하시면, 판매할 수 있습니다.</p>':'')+
+ '<div id="cc" aria-live="polite"></div>'+(sel?'<div id="sg" style="margin-bottom:8px"></div>':'')+
+ '<form class="row" style="flex-wrap:nowrap" onsubmit="return sendChat('+r.id+',this)"><input name="t" required placeholder="메시지를 입력하고 Enter" autocomplete="off" aria-label="메시지"'+(sel?' oninput="chatSug(this)"':'')+'><button class="btn r">보내기</button></form></div>';
+}
+function chatSug(inp){var e=document.getElementById('sg');if(!e)return;e.innerHTML=/^@/.test(inp.value)&&!/^@\s*(판매하기|구매하기)/.test(inp.value)?'<button type="button" class="chip" onclick="pickMention()">@판매하기 <small style="color:var(--mut)">구매하기 버튼 보내기</small></button>':''}
+function pickMention(){var i=document.querySelector('#app form input[name=t]');if(i){i.value='@판매하기';i.focus()}var e=document.getElementById('sg');if(e)e.innerHTML=''}
+function drawChat(id){
+ var r=room(id),e=document.getElementById('cc'),u=me();if(!r||!e||!u)return;
+ var p=prod(r.pid);
+ e.innerHTML=r.msgs.length?r.msgs.map(function(m){
+  if(m.kind==='sys')return '<p style="text-align:center;color:var(--mut);font-size:13px;margin:10px 0">'+esc(m.text)+'</p>';
+  if(m.kind==='offer'){
+   var gone=m.done||!p||p.sold;
+   if(r.a===u.id)return '<div class="bub" style="max-width:88%"><b>🛒 판매자가 구매를 제안했어요</b><br>'+(p?esc(p.title)+' · '+fmt(p.price):'삭제된 상품')+'<br><button class="btn sm r" style="margin-top:8px" '+(gone?'disabled':'onclick="buyOffer('+r.id+')"')+'>'+(m.done?'구매 완료':gone?'판매 종료':'구매하기')+'</button><br><small style="opacity:.6">'+ago(m.date)+'</small></div>';
+   return '<div class="bub u">'+esc(m.text)+'<br><small style="opacity:.85">구매자에게 구매하기 버튼을 보냈어요'+(m.done?' · 구매 완료':'')+'</small><br><small style="opacity:.6">'+ago(m.date)+'</small></div>'
+  }
+  return '<div class="bub'+(m.from===u.id?' u':'')+'" style="white-space:pre-wrap">'+esc(m.text)+'<br><small style="opacity:.6">'+ago(m.date)+'</small></div>'
+ }).join(''):'<p style="color:var(--mut);text-align:center;margin-top:120px">첫 메시지를 보내 보세요.</p>';
+ e.scrollTop=e.scrollHeight;
+}
+function sendChat(id,f){
+ var u=me(),r=room(id),t=f.t.value.trim();if(!t||!r)return false;
+ var m={from:u.id,text:t,date:Date.now()};
+ if(chatSeller(r,u)&&/^@\s*(판매하기|구매하기)(\s|$)/.test(t)){m.kind='offer';m.done=false;toast('구매자에게 구매하기 버튼을 보냈어요')}
+ r.msgs.push(m);r.seen=r.seen||{};r.seen[u.id]=r.msgs.length;
+ if(r.kind==='inq'&&u.role==='admin'){var x=db.inq.slice().reverse().find(function(i){return i.rid===r.id&&!i.ans});if(x){x.ans=t;x.ansDate=Date.now()}}
+ save();f.t.value='';var sg=document.getElementById('sg');if(sg)sg.innerHTML='';render();return false
+}
+function buyOffer(rid){
+ var u=me(),r=room(rid);if(!u||!r||r.a!==u.id)return;
+ var p=prod(r.pid);if(!p||p.sold){toast('이미 판매가 끝난 물건이에요');return}
+ if(!confirm(p.title+' ('+fmt(p.price)+')을(를) 구매할까요?'))return;
+ p.sold=true;p.buyer=u.id;
+ r.msgs.forEach(function(m){if(m.kind==='offer')m.done=true});
+ r.msgs.push({from:u.id,kind:'sys',text:u.nick+'님이 구매를 확정했어요 🎉 거래가 완료됐어요.',date:Date.now()});
+ r.seen=r.seen||{};r.seen[u.id]=r.msgs.length;save();toast('구매가 완료됐어요');render();rateDlg(p.id,p.seller||adminId())
+}
+function addCart(id){
+ if(!need())return;var c=db.carts[db.session]=db.carts[db.session]||[],x=c.find(function(i){return i.pid===id});
+ if(x)x.qty++;else c.push({pid:id,qty:1});save();head();toast('장바구니에 담았어요')
+}
+function buyNow(id){if(!need())return;co=[{pid:id,qty:1}];go('checkout')}
+function vCart(){
+ var u=me();if(!u)return loginAsk();
+ var c=db.carts[u.id]||[];if(!c.length)return '<div class="empty"><h2>장바구니가 비어 있어요</h2><p>마음에 드는 새상품을 담아 보세요.</p></div>';
+ var tot=0;
+ return '<div class="panel"><h2>장바구니</h2><div class="tw"><table>'+c.map(function(i){var p=prod(i.pid);if(!p)return '';tot+=p.price*i.qty;return '<tr><td>'+p.emoji+' '+esc(p.title)+'</td><td>'+fmt(p.price)+'</td><td><input type="number" min="1" max="'+p.stock+'" value="'+i.qty+'" style="width:76px" onchange="setQty('+p.id+',this.value)"></td><td><button class="btn sm red" onclick="rmCart('+p.id+')">삭제</button></td></tr>'}).join('')+'</table></div><p class="price">합계 '+fmt(tot)+'</p><button class="btn r" onclick="cartOrder()">주문하기</button></div>';
+}
+function setQty(id,v){var i=db.carts[db.session].find(function(x){return x.pid===id});i.qty=Math.max(1,parseInt(v)||1);save();render()}
+function rmCart(id){db.carts[db.session]=db.carts[db.session].filter(function(x){return x.pid!==id});save();render()}
+function cartOrder(){co=db.carts[db.session].filter(function(i){return prod(i.pid)}).map(function(i){return{pid:i.pid,qty:i.qty}});go('checkout')}
+function vCheckout(){
+ var u=me();if(!u)return loginAsk();
+ if(!co||!co.length)return '<div class="empty"><h2>주문할 상품이 없어요</h2><a class="btn r" href="#home">쇼핑하러 가기</a></div>';
+ var sub=0,rows=co.map(function(i){var p=prod(i.pid);if(!p)return '';sub+=p.price*i.qty;return '<tr><td>'+p.emoji+' '+esc(p.title)+'</td><td>'+num(i.qty)+'개</td><td>'+fmt(p.price*i.qty)+'</td></tr>'}).join(''),ship=sub>=30000?0:3000;
+ return '<div class="panel"><h2>주문 상품</h2><div class="tw"><table>'+rows+'</table></div></div><div class="panel"><h2>배송·결제 정보</h2><form class="f" onsubmit="return doOrder(this)"><label>받는 분</label><input name="nm" required value="'+esc(u.nick)+'"><label>연락처</label><input name="tl" type="tel" required value="'+esc(u.phone?fmtPh(u.phone):'')+'"><label>주소</label><input name="ad" required placeholder="도로명 주소와 상세 주소"><label>배송 요청사항</label><select name="mm">'+opts(['문 앞에 놓아주세요','경비실에 맡겨주세요','배송 전 연락 주세요','요청사항 없음'])+'</select><label>결제 수단</label><select name="py">'+opts(['카드 결제','간편 결제','무통장 입금'])+'</select><p style="margin:6px 0 0">상품 '+fmt(sub)+' + 배송비 '+(ship?fmt(ship):'무료')+' <small style="color:var(--mut)">(30,000원 이상 무료)</small></p><p class="price" style="margin:0">총 '+fmt(sub+ship)+'</p><button class="btn r">결제하기</button></form></div>';
+}
+function doOrder(f){
+ var u=me(),sub=0,lines=[],i,p;
+ for(i=0;i<co.length;i++){p=prod(co[i].pid);if(!p||p.stock<co[i].qty){toast((p?p.title:'상품')+' 재고가 부족해요');return false}}
+ co.forEach(function(it){var p=prod(it.pid);p.stock-=it.qty;sub+=p.price*it.qty;lines.push({pid:p.id,title:p.title,emoji:p.emoji,qty:it.qty,price:p.price})});
+ var ship=sub>=30000?0:3000,id=db.nid++;
+ db.orders.push({id:id,uid:u.id,items:lines,sub:sub,ship:ship,total:sub+ship,status:f.py.value==='무통장 입금'?'입금대기':'결제완료',pay:f.py.value,info:{nm:f.nm.value.trim(),tl:f.tl.value.trim(),ad:f.ad.value.trim(),mm:f.mm.value},date:Date.now()});
+ db.carts[u.id]=(db.carts[u.id]||[]).filter(function(c){return !co.some(function(x){return x.pid===c.pid})});
+ co=null;save();toast('주문이 완료됐어요');go('order-'+id);return false
+}
+function vOrders(){
+ var u=me();if(!u)return loginAsk();
+ var od=db.orders.filter(function(o){return o.uid===u.id}).reverse();
+ return '<div class="panel"><h2>주문내역</h2>'+(od.length?'<div class="tw"><table><tr><th>주문번호</th><th>상품</th><th>금액</th><th>상태</th><th></th></tr>'+od.map(function(o){return '<tr><td>#'+num(o.id)+'<br><small>'+ago(o.date)+'</small></td><td>'+o.items.map(function(i){return esc(i.title)+' x'+num(i.qty)}).join(', ')+'</td><td>'+fmt(o.total)+'</td><td><span class="tag'+(o.status==='취소'?' x':'')+'">'+o.status+'</span></td><td><a class="btn sm gh" href="#order-'+o.id+'">상세</a></td></tr>'}).join('')+'</table></div>':'<div class="empty" style="padding:30px"><h2>주문한 상품이 없어요</h2><p>새상품 모드에서 주문해 보세요.</p></div>')+'</div>';
+}
+function vOrder(id){
+ var u=me(),o=db.orders.find(function(x){return x.id===id});
+ if(!u)return loginAsk();
+ if(!o||(o.uid!==u.id&&u.role!=='admin'))return '<div class="empty"><h2>주문을 찾을 수 없어요</h2><a class="btn" href="#orders">주문내역</a></div>';
+ var inf=o.info||{},idx=STP.indexOf(o.status);
+ return '<a href="#orders" class="chip" style="display:inline-block;margin-bottom:14px">← 주문내역</a><div class="panel"><h2>주문 #'+num(o.id)+'</h2><div class="row" style="margin-bottom:12px">'+(o.status==='취소'?'<span class="tag x">주문 취소됨</span>':(o.status==='입금대기'?'<span class="tag">입금대기</span> ':'')+STP.map(function(s,i){return '<span class="tag'+(i<=idx?'':' off')+'">'+s+'</span>'}).join('<span style="color:var(--mut)">›</span>'))+'</div><div class="tw"><table>'+o.items.map(function(i){return '<tr><td>'+(i.emoji||'📦')+' '+esc(i.title)+'</td><td>'+num(i.qty)+'개</td><td>'+fmt(i.price*i.qty)+'</td></tr>'}).join('')+'</table></div><p>상품 '+fmt(o.sub||o.total)+' + 배송비 '+((o.ship||0)?fmt(o.ship):'무료')+'</p><p class="price">총 '+fmt(o.total)+'</p></div><div class="panel"><h2>배송·결제</h2><p style="margin:0">받는 분 '+esc(inf.nm||'-')+' · '+esc(inf.tl||'-')+'<br>주소 '+esc(inf.ad||'-')+'<br>요청사항 '+esc(inf.mm||'-')+'<br>결제 '+esc(o.pay||'-')+'</p>'+((o.status==='입금대기'||o.status==='결제완료')?'<p><button class="btn red" onclick="cancelOrder('+o.id+')">주문 취소</button></p>':'<p><a class="btn gh" href="#support" onclick="stab=\'inq\'">이 주문 문의하기</a></p>')+'</div>';
+}
+function restock(o){o.items.forEach(function(i){var p=prod(i.pid);if(p)p.stock+=i.qty})}
+function cancelOrder(id){if(!confirm('주문을 취소할까요?'))return;var o=db.orders.find(function(x){return x.id===id});o.status='취소';restock(o);save();toast('주문을 취소했어요');render()}
+function vSell(){
+ if(!me())return '<div class="empty"><h2>로그인하면 팔 수 있어요</h2><a class="btn r" href="#login">로그인하기</a></div>';
+ photos=[];if(me().status==='sellban')return '<div class="empty"><h2>판매가 제한된 계정이에요</h2><p>문의가 있으면 고객센터로 연락해 주세요.</p></div>';if(!me().pv)return phonePanel('판매글을 올리려면 휴대폰 인증이 필요해요.');
+ return '<div class="panel"><h2>중고 물건 팔기</h2><form class="f" onsubmit="return doSell(this)"><label>제목</label><input name="t" required maxlength="40"><label>가격(원)</label><input name="pr" type="number" min="0" required><label>카테고리</label><select name="c">'+opts(CATS.slice(1))+'</select><label>상품 상태 등급 (새상품에 가까울수록 높아요)</label><select name="g" required><option value="" disabled selected>등급을 선택하세요</option>'+GR.map(function(g){return '<option value="'+g[0]+'">'+g[1]+'</option>'}).join('')+'</select><label>지역</label><select name="rg">'+regOpts(reg==='전체'?'서울':reg,false)+'</select><label>동네</label><input name="a" required placeholder="예: 부평동"><label>사진 (최대 4장)</label><input type="file" accept="image/*" multiple onchange="addPhotos(this)"><div id="pv" class="row"></div><label>사진이 없을 때 쓸 이모지</label><select name="e">'+opts(EMO)+'</select><label>설명</label><textarea name="d" rows="4" required></textarea><button class="btn r">판매글 올리기</button></form></div>';
+}
+function doSell(f){if(me().status==='sellban'){toast('판매가 제한된 계정이에요');return false}
+ if(['S','A','B','C','D'].indexOf(f.g.value)<0){toast('상품 등급을 선택해 주세요');return false}
+ var id=db.nid++;db.products.push({id:id,type:'used',grade:f.g.value,title:f.t.value.trim(),price:+f.pr.value,cat:f.c.value,emoji:f.e.value,bg:BGS[id%4],region:f.rg.value,area:f.a.value.trim(),imgs:photos.slice(),stock:1,desc:f.d.value.trim(),seller:db.session,likes:0,sold:false,created:Date.now()});
+ if(!save()){db.products.pop();return false}photos=[];toast('판매글을 올렸어요');go('detail-'+id);return false
+}
+function vMe(){
+ var u=me();if(!u)return loginAsk();
+ var mine=db.products.filter(function(p){return p.seller===u.id&&p.type==='used'});
+ var ms=db.msgs.filter(function(m){return m.to===u.id}).reverse();
+ return '<div class="panel"><h2>'+esc(u.nick)+'님의 방</h2><p style="color:var(--mut);margin:0 0 12px">'+esc(u.username)+' '+tBadge(u.id)+(u.pv?' · 휴대폰 '+fmtPh(u.phone).slice(0,-4)+'**** ✓':'')+'</p><div class="row"><a class="btn sm gh" href="#orders">주문내역</a><a class="btn sm gh" href="#account">계정 설정</a><a class="btn sm gh" href="#support">고객센터</a></div></div>'+(u.pv?'':phonePanel('휴대폰 인증을 하면 판매글을 올릴 수 있어요.'))+
+ '<div class="panel"><h2>내 판매글</h2>'+(mine.length?mine.map(function(p){return '<div class="row" style="padding:6px 0"><a href="#detail-'+p.id+'" style="flex:1">'+p.emoji+' '+esc(p.title)+' '+(p.sold?'<span class="tag x">판매완료</span>':'')+'</a><button class="btn sm gh" onclick="toggleSold('+p.id+')">'+(p.sold?'판매중으로':'판매완료로')+'</button><button class="btn sm red" onclick="delProd('+p.id+')">삭제</button></div>'}).join(''):'<p style="color:var(--mut)">아직 올린 글이 없어요.</p>')+'</div>'+
+ pendingRates()+'<div class="panel"><h2>채팅</h2><p style="color:var(--mut)">판매자·구매자, 관리자와 나눈 대화는 채팅에서 볼 수 있어요.</p><a class="btn sm r" href="#chat">채팅 열기</a></div>';
+}
+function dlgEl(){return document.getElementById('dlg')}
+function toggleSold(id){
+ var p=prod(id);if(p.sold){p.sold=false;delete p.buyer;save();render();return}
+ var rs=db.rooms.filter(function(r){return r.kind==='item'&&r.pid===id}),d=dlgEl();if(d.open)return;
+ d.innerHTML='<h3 style="margin-top:0">누구와 거래했나요?</h3><p style="color:var(--mut);font-size:13px">구매자를 고르면 서로 따듯함 온도를 평가할 수 있어요.</p>'+(rs.length?rs.map(function(r){return '<button class="btn gh" style="width:100%;margin-bottom:8px" onclick="finishSale('+id+','+r.a+')">'+esc(usr(r.a))+'</button>'}).join(''):'<p style="color:var(--mut)">채팅한 이웃이 없어요.</p>')+'<div class="row"><button class="btn gh sm" onclick="finishSale('+id+',0)">구매자 지정 없이 완료</button><button class="btn gh sm" onclick="dlgEl().close()">취소</button></div>';
+ d.showModal();
+}
+function finishSale(id,buyer){var p=prod(id);p.sold=true;p.buyer=buyer||0;save();dlgEl().close();render();if(buyer)rateDlg(id,buyer)}
+function tempOf(id){var r=db.reviews.filter(function(x){return x.to===id}),t=r.reduce(function(a,x){return a+x.temp},0);return Math.round((36.5*3+t)/(3+r.length)*10)/10}
+function tColor(t){return t<20?'#2563eb':t<36?'#3b82f6':t<60?'#ff8a00':t<80?'#ff5a1f':'#e11d48'}
+function tLabel(t){return t<20?'🥶 많이 차가웠어요':t<36?'😐 아쉬웠어요':t<50?'🙂 무난했어요':t<70?'😊 따뜻했어요':t<90?'😄 아주 따뜻했어요':'🔥 최고였어요'}
+function tBadge(id){var t=tempOf(id);return '<span class="tag" style="background:'+tColor(t)+';color:#fff">🌡️ '+t+'°C</span>'}
+function rateBtn(p){var u=me();if(!u||!p.sold||!p.buyer||p.type!=='used')return '';var t=u.id===p.seller?p.buyer:u.id===p.buyer?p.seller:0;if(!t||db.reviews.some(function(r){return r.pid===p.id&&r.from===u.id}))return '';return '<button class="btn r" onclick="rateDlg('+p.id+','+t+')">거래 평가하기</button>'}
+function pendingRates(){var u=me(),l=db.products.filter(function(p){return p.type==='used'&&p.sold&&p.buyer&&(p.seller===u.id||p.buyer===u.id)&&!db.reviews.some(function(r){return r.pid===p.id&&r.from===u.id})});
+ return l.length?'<div class="panel"><h2>거래 평가 대기</h2>'+l.map(function(p){var t=p.seller===u.id?p.buyer:p.seller;return '<div class="row" style="padding:6px 0"><span style="flex:1">'+esc(p.title)+' · '+esc(usr(t))+'</span><button class="btn sm r" onclick="rateDlg('+p.id+','+t+')">평가하기</button></div>'}).join('')+'</div>':''}
+function rateDlg(pid,to){
+ var u=me(),d=dlgEl();if(!u||d.open)return;
+ if(db.reviews.some(function(r){return r.pid===pid&&r.from===u.id})){toast('이미 평가했어요');return}
+ d.innerHTML='<h3 style="margin-top:0">'+esc(usr(to))+'님과의 거래는 어땠나요?</h3><p style="color:var(--mut);font-size:13px;margin:0 0 8px">따듯함 온도를 0°C ~ 100°C 로 남겨 주세요.</p><div style="text-align:center;margin:8px 0"><div class="price" id="tv">36.5°C</div><div id="tl" style="color:var(--mut)"></div></div><input type="range" id="tr" min="0" max="100" step="0.5" value="36.5" oninput="tUpd()" aria-label="따듯함 온도" style="padding:0;accent-color:var(--or)"><div class="row" style="justify-content:space-between;color:var(--mut);font-size:12px"><span>0°C 차가움</span><span>100°C 뜨거움</span></div><textarea id="tc" rows="2" maxlength="100" placeholder="한마디 (선택)" style="margin-top:10px"></textarea><div class="row" style="margin-top:12px"><button class="btn r" onclick="sendRate('+pid+','+to+')">평가 남기기</button><button class="btn gh" onclick="dlgEl().close()">나중에</button></div>';
+ d.showModal();tUpd();
+}
+function tUpd(){var v=+document.getElementById('tr').value,e=document.getElementById('tv');e.textContent=v+'°C';e.style.color=tColor(v);document.getElementById('tl').textContent=tLabel(v)}
+function sendRate(pid,to){var u=me(),v=+document.getElementById('tr').value;if(db.reviews.some(function(r){return r.pid===pid&&r.from===u.id}))return;
+ db.reviews.push({id:db.nid++,pid:pid,from:u.id,to:to,temp:Math.min(100,Math.max(0,v)),text:document.getElementById('tc').value.trim().slice(0,100),date:Date.now()});save();dlgEl().close();toast('따듯함 온도를 남겼어요');render()}
+function delProd(id){if(!confirm('이 상품을 삭제할까요?'))return;db.products=db.products.filter(function(p){return p.id!==id});save();render()}
+function vSettings(){
+ var u=me();if(!u)return loginAsk();
+ var pv=u.provider&&u.provider!=='local'?PV[u.provider][0]:'아이디';
+ var info=[['아이디',esc(u.username)],['닉네임',esc(u.nick)],['가입 경로',pv],['휴대폰',u.pv?fmtPh(u.phone):'미인증'],['계정 유형',acctLabel(u)],['가입일',new Date(u.joined).toLocaleDateString('ko-KR')]];
+ return '<div class="panel"><h2>내 계정</h2><table style="min-width:0">'+info.map(function(x){return '<tr><th style="width:110px;color:var(--mut)">'+x[0]+'</th><td>'+x[1]+'</td></tr>'}).join('')+'</table></div>'+
+ '<div class="panel"><h2>닉네임 변경</h2><form class="row" style="flex-wrap:nowrap" onsubmit="return saveNick(this)"><input name="n" required maxlength="12" value="'+esc(u.nick)+'" aria-label="닉네임"><button class="btn">저장</button></form></div>'+
+ '<div class="panel"><h2>비밀번호 변경</h2>'+(u.pw?'<form class="f" onsubmit="return savePw(this)"><input name="c" type="password" required placeholder="현재 비밀번호" autocomplete="current-password"><input name="n" type="password" required minlength="8" placeholder="새 비밀번호 (8자 이상)" autocomplete="new-password"><button class="btn">변경</button></form>':'<p style="margin:0;color:var(--mut)">'+pv+' 계정의 비밀번호가 아직 없어요. 다음 소셜 로그인 때 설정돼요.</p>')+'</div>'+
+ phonePanel(u.pv?'현재 번호 '+fmtPh(u.phone)+'. 바꾸려면 새 번호를 인증해 주세요.':'아직 인증하지 않았어요. 번호를 입력해 인증해 주세요.')+
+ '<div class="panel"><h2>화면</h2><select onchange="db.theme=this.value;applyTheme();save()" style="max-width:220px" aria-label="화면 모드"><option value="light"'+(db.theme==='light'?' selected':'')+'>화이트 모드</option><option value="dark"'+(db.theme==='dark'?' selected':'')+'>다크 모드</option></select></div>'+
+ '<div class="panel"><h2>회원 탈퇴</h2><p style="color:var(--mut)">탈퇴하면 계정과 내가 올린 중고 판매글이 삭제돼요. 주문내역은 기록으로 남아요.</p><button class="btn red" '+(u.role==='admin'?'disabled':'onclick="delMe()"')+'>탈퇴하기</button></div>';
+}
+var sq='',sf='all',scat='전체';
+function sCard(p){return card(p).replace('<div class="th" style="background:'+p.bg+'">','<div class="th" style="background:'+p.bg+'"><span class="tag" style="position:absolute;left:8px;top:8px;z-index:1">'+(p.type==='used'?'중고':'새상품')+'</span>')}
+function vStore(){
+ return '<section class="hero"><h1>문 열면,<br>이웃의 물건.</h1><p>중고거래와 새상품 중 하나를 골라 둘러보세요. 로그인 없이 볼 수 있어요.</p><div class="kh"><i></i><b></b></div></section>'+
+ '<form class="row" style="flex-wrap:nowrap" onsubmit="sq=this.q.value.trim();slist();return false"><input name="q" type="search" enterkeyhint="search" placeholder="물건 검색 후 Enter" value="'+esc(sq)+'" aria-label="검색"><button class="btn r">검색</button></form>'+
+ '<div class="chips" style="margin-bottom:8px">'+[['used','중고'],['new','새상품']].map(function(x){return '<button class="chip '+(db.mode===x[0]?'on':'')+'" onclick="db.mode=\''+x[0]+'\';save();render()">'+x[1]+'</button>'}).join('')+'</div>'+
+ '<div class="chips">'+CATS.map(function(c){return '<button class="chip '+(c===scat?'on':'')+'" onclick="scat=\''+c+'\';render()">'+c+'</button>'}).join('')+'</div><div id="sl"></div>';
+}
+function slist(){
+ var l=db.products.filter(function(p){return p.type===db.mode&&(scat==='전체'||p.cat===scat)&&p.title.indexOf(sq)>-1});
+ l.sort(function(a,b){return(a.sold?1:0)-(b.sold?1:0)||b.created-a.created});
+ document.getElementById('sl').innerHTML=l.length?'<div class="grid">'+l.map(sCard).join('')+'</div>':'<div class="empty"><h2>찾는 물건이 없어요</h2><p>다른 검색어나 카테고리를 골라 보세요.</p></div>';
+}
+var AC={info:['계정','내 정보'],nickname:['계정','닉네임 변경'],type:['계정','계정 유형'],password:['보안','비밀번호 변경'],phone:['보안','휴대폰 인증'],theme:['화면','화이트·다크 모드'],sessions:['보안','로그인 기록'],notify:['알림','알림 설정'],privacy:['개인정보','개인정보·내 데이터'],policy:['정보','약관 및 정책'],about:['정보','서비스 정보'],delete:['기타','회원 탈퇴']};
+function vAccount(k){
+ var u=me();if(!u)return loginAsk();
+ if(!AC[k]){
+  var G=[['계정',['info','nickname','type']],['보안',['password','phone','sessions']],['알림',['notify']],['개인정보',['privacy']],['화면',['theme']],['정보',['policy','about']],['기타',['delete']]];
+  return '<h1 style="font-family:var(--h);font-weight:400;font-size:40px;margin:10px 0 14px">설정</h1>'+G.map(function(g){return '<div class="panel"><h2>'+g[0]+'</h2>'+g[1].map(function(x){return '<a href="#account-'+x+'" class="row" style="justify-content:space-between;padding:10px 0;border-top:1px solid var(--line)"><span>'+AC[x][1]+'</span><span>›</span></a>'}).join('')+'</div>'}).join('');
+ }
+ var pv=u.provider&&u.provider!=='local'?PV[u.provider][0]:'아이디';
+ var b='<p style="margin:0 0 14px;color:var(--mut)"><a href="#account" style="text-decoration:underline">설정</a> › '+AC[k][0]+' › <b style="color:var(--ink)">'+AC[k][1]+'</b></p>';
+ if(k==='info'){
+  var info=[['아이디',esc(u.username)],['닉네임',esc(u.nick)],['가입 경로',pv],['휴대폰',u.pv?fmtPh(u.phone):'미인증'],['계정 유형',acctLabel(u)],['가입일',new Date(u.joined).toLocaleDateString('ko-KR')]];
+  return b+'<div class="panel"><h2>내 정보</h2><table style="min-width:0">'+info.map(function(x){return '<tr><th style="width:110px;color:var(--mut)">'+x[0]+'</th><td>'+x[1]+'</td></tr>'}).join('')+'</table></div>';
+ }
+ var xx=vAccountX(k,b,u);if(xx)return xx;
+  if(k==='nickname')return b+'<div class="panel"><h2>닉네임 변경</h2><form class="row" style="flex-wrap:nowrap" onsubmit="return saveNick(this)"><input name="n" required maxlength="12" value="'+esc(u.nick)+'" aria-label="닉네임"><button class="btn">저장</button></form></div>';
+ if(k==='password')return b+'<div class="panel"><h2>비밀번호 변경</h2>'+(u.pw?'<form class="f" onsubmit="return savePw(this)"><input name="c" type="password" required placeholder="현재 비밀번호" autocomplete="current-password"><input name="n" type="password" required minlength="8" placeholder="새 비밀번호 (8자 이상)" autocomplete="new-password"><button class="btn">변경</button></form>':'<p style="margin:0;color:var(--mut)">'+pv+' 계정의 비밀번호가 아직 없어요. 다음 소셜 로그인 때 설정돼요.</p>')+'</div>';
+ if(k==='phone')return b+phonePanel(u.pv?'현재 번호 '+fmtPh(u.phone)+'. 바꾸려면 새 번호를 인증해 주세요.':'아직 인증하지 않았어요. 번호를 입력해 인증해 주세요.');
+ if(k==='theme')return b+'<div class="panel"><h2>화이트·다크 모드</h2><select onchange="db.theme=this.value;applyTheme();save()" style="max-width:220px" aria-label="화면 모드"><option value="light"'+(db.theme==='light'?' selected':'')+'>화이트 모드</option><option value="dark"'+(db.theme==='dark'?' selected':'')+'>다크 모드</option></select></div>';
+ return b+'<div class="panel"><h2>회원 탈퇴</h2><p style="color:var(--mut)">탈퇴하면 계정과 내가 올린 중고 판매글이 삭제돼요. 주문내역은 기록으로 남아요.</p><button class="btn red" '+(u.role==='admin'?'disabled':'onclick="delMe()"')+'>탈퇴하기</button></div>';
+}
+function saveNick(f){var u=me();u.nick=f.n.value.trim();save();toast('닉네임을 바꿨어요');render();return false}
+async function savePw2(f){var u=me();if(u.pw!==await hp(f.c.value,u.salt)){toast('현재 비밀번호가 맞지 않아요');return}var s=newSalt();u.salt=s;u.pw=await hp(f.n.value,s);save();toast('비밀번호를 바꿨어요');f.reset()}
+function savePw(f){savePw2(f);return false}
+function delMe(){
+ if(!confirm('정말 탈퇴할까요? 되돌릴 수 없어요.'))return;
+ var id=db.session;db.products=db.products.filter(function(p){return p.seller!==id});db.users=db.users.filter(function(u){return u.id!==id});delete db.carts[id];db.session=null;save();toast('탈퇴가 완료됐어요');go('home');render()
+}
+var bot=[{r:'b',t:'안녕하세요! 물건 Store 도우미예요. 궁금한 점을 입력하거나 아래 버튼을 눌러 보세요.'}];
+var FAQ=[
+ [/배송|택배|도착|언제/,'새상품은 결제 후 영업일 기준 2~3일 안에 도착해요. 진행 상황은 주문내역에서 볼 수 있고, 배송비는 3,000원이에요. 30,000원 이상이면 무료예요.'],
+ [/취소|환불|반품/,'주문내역에서 입금대기나 결제완료 상태일 때 직접 취소할 수 있어요. 배송이 시작된 뒤에는 1:1 문의로 반품을 신청해 주세요.'],
+ [/결제|카드|입금|수단/,'카드 결제, 간편 결제, 무통장 입금 중에서 고를 수 있어요. 무통장 입금은 입금 확인 뒤에 배송 준비가 시작돼요.'],
+ [/휴대폰|인증|번호/,'판매글을 올리려면 휴대폰 인증이 필요해요. 회원가입 때, 또는 내 방과 설정 페이지에서 인증할 수 있어요.'],
+ [/판매|올리|등록|사진/,'중고거래 모드의 판매하기에서 사진(최대 4장), 가격, 지역을 입력하면 돼요. 휴대폰 인증을 먼저 해야 해요.'],
+ [/지역|동네|근처/,'중고거래 화면의 지역 선택에서 시·도별로 물건을 모아 볼 수 있어요.'],
+ [/중고|직거래|채팅|사기/,'중고 물건은 직접 만나 확인하고 거래하길 권해요. 먼저 돈을 보내 달라는 요청은 조심하세요. 상품 페이지의 채팅하기로 판매자에게 메시지를 보낼 수 있어요.'],
+ [/로그인|비밀번호|가입|계정|탈퇴/,'로그인은 Google, Apple, GitHub 또는 아이디로 할 수 있어요. 닉네임·비밀번호 변경과 탈퇴는 설정 페이지에서 해요.'],
+ [/안녕|하이|hello|hi/i,'안녕하세요! 무엇이 궁금하세요?']];
+var QK=['배송은 얼마나 걸려요?','주문 취소하고 싶어요','결제 수단 알려주세요','판매글은 어떻게 올려요?','휴대폰 인증이 왜 필요해요?','지역별로 보려면?'];
+function clean(v){return String(v).normalize('NFC').replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B-\u200F\u202A-\u202E\u2066-\u2069]/g,'').trim().slice(0,2000)}
+var SQLRX=/['"]\s*(or|and)\s+['"\d(]|['"]\s*;?\s*--|;\s*(drop|delete|insert|update|alter|truncate|create|exec)\s|union\s+(all\s+)?select|\/\*|\*\/|xp_cmdshell|information_schema|(sleep|benchmark)\s*\(|waitfor\s+delay/i;
+document.addEventListener('submit',function(e){
+ var els=e.target.querySelectorAll('input,textarea'),i,el,t,v;
+ for(i=0;i<els.length;i++){el=els[i];t=el.type;
+  if(['password','file','range','checkbox','radio','hidden'].indexOf(t)>-1)continue;
+  if(t==='number'){if(el.value!==''&&!isFinite(+el.value)){e.preventDefault();e.stopImmediatePropagation();toast('숫자만 입력해 주세요');return}continue}
+  v=clean(el.value);
+  if(SQLRX.test(v)){e.preventDefault();e.stopImmediatePropagation();toast('허용되지 않는 문자가 포함돼 있어요');return}
+  if(v!==el.value)el.value=v;
+ }
+},true);
+function faqAns(t){for(var i=0;i<FAQ.length;i++){if(FAQ[i][0].test(t))return FAQ[i][1]}return null}
+function botAsk(t){
+ t=clean(t);if(!t)return;
+ if(SQLRX.test(t)){toast('허용되지 않는 문자가 포함돼 있어요');return}
+ bot.push({r:'u',t:t});var a=faqAns(t);
+ bot.push({r:'b',t:a||'아직 이 질문은 잘 모르겠어요. 아래 상담원 문의 버튼으로 1:1 문의를 남겨 주시면 답변드릴게요.'});drawBot()
+}
+function drawBot(){var e=document.getElementById('bc');if(!e)return;e.innerHTML=bot.map(function(m){return '<div class="bub'+(m.r==='u'?' u':'')+'">'+esc(m.t)+'</div>'}).join('');e.scrollTop=e.scrollHeight}
+function vSupport(){
+ var h='<div class="tabs"><button class="chip '+(stab==='bot'?'on':'')+'" onclick="stab=\'bot\';render()">봇 상담</button><button class="chip '+(stab==='inq'?'on':'')+'" onclick="stab=\'inq\';render()">1:1 문의</button></div>';
+ if(stab==='bot')return h+'<div class="panel"><h2>봇 상담</h2><div id="bc" aria-live="polite"></div><div class="chips" style="margin:0 0 10px">'+QK.map(function(k){return '<button class="chip" onclick="botAsk(this.textContent)">'+k+'</button>'}).join('')+'<button class="chip" onclick="stab=\'inq\';render()">상담원 문의</button></div><form class="row" style="flex-wrap:nowrap" onsubmit="botAsk(this.t.value);this.t.value=\'\';return false"><input name="t" placeholder="궁금한 점을 입력하고 Enter" aria-label="질문"><button class="btn r">보내기</button></form><p style="color:var(--mut);font-size:13px;margin:10px 0 0">자주 묻는 질문에 답하는 자동 응답 봇이에요.</p></div>';
+ var u=me();if(!u)return h+loginAsk();
+ var my=db.inq.filter(function(x){return x.uid===u.id}).reverse();
+ return h+'<div class="panel"><h2>1:1 문의하기</h2><form class="f" onsubmit="return doInq(this)"><label>문의 유형</label><select name="c">'+opts(IQC)+'</select><label>제목</label><input name="t" required maxlength="50"><label>내용</label><textarea name="x" rows="4" required></textarea><button class="btn r">문의 등록</button></form></div><div class="panel"><h2>내 문의 내역</h2>'+(my.length?my.map(function(x){return '<div style="padding:10px 0;border-bottom:1px solid var(--line)"><span class="tag'+(x.ans?'':' off')+'">'+(x.ans?'답변완료':'답변대기')+'</span> <span class="tag off">'+x.cat+'</span> <b>'+esc(x.title)+'</b> <small style="color:var(--mut)">'+ago(x.date)+'</small><p style="margin:6px 0">'+esc(x.text)+'</p>'+(x.ans?'<p style="margin:0;padding:10px 12px;background:var(--bg);border-radius:12px"><b>답변</b> · '+esc(x.ans)+'</p>':'')+'</div>'}).join(''):'<p style="color:var(--mut)">등록한 문의가 없어요.</p>')+'</div>';
+}
+function doInq(f){
+ var u=me(),ad=adminId(),r=db.rooms.find(function(x){return x.kind==='inq'&&x.a===u.id}),t=f.t.value.trim(),x=f.x.value.trim();
+ if(!r){r={id:db.nid++,kind:'inq',pid:0,a:u.id,b:ad,title:'1:1 문의',msgs:[],seen:{}};db.rooms.push(r)}
+ db.inq.push({id:db.nid++,uid:u.id,rid:r.id,cat:f.c.value,title:t,text:x,date:Date.now(),ans:'',ansDate:0});
+ r.msgs.push({from:u.id,text:'['+f.c.value+'] '+t+'\n'+x,date:Date.now()});
+ save();toast('문의가 관리자에게 메시지로 전달됐어요');render();return false
+}
+function vLogin(){
+ var s=authMode==='signup';
+ return '<div class="panel" style="max-width:460px;margin:24px auto"><h2>'+(s?'회원가입':'로그인')+'</h2><div class="f" style="max-width:none">'+
+ Object.keys(PV).map(function(k){return '<button class="sb" onclick="social(\''+k+'\')"><span class="lg">'+LOGO[k]+'</span>'+PV[k][0]+'로 계속하기</button>'}).join('')+'</div><div class="or">또는</div>'+
+ '<form class="f" style="max-width:none" onsubmit="return doAuth(this)"><label>아이디</label><input name="u" required minlength="3" autocomplete="username">'+(s?'<label>닉네임</label><input name="n" required maxlength="12"><label>휴대폰 번호</label><div class="row" style="flex-wrap:nowrap"><input name="ph" type="tel" inputmode="numeric" placeholder="010-1234-5678" required><button type="button" class="btn gh" onclick="sendVerify(this.form.ph.value)">인증</button></div><small id="phs" style="color:var(--mut)">'+(sPhone?'인증 완료 ✓ (번호를 바꾸면 다시 인증해 주세요)':'가입하려면 휴대폰 인증이 필요해요')+'</small>':'')+'<label>비밀번호</label><input name="p" type="password" required minlength="8" autocomplete="'+(s?'new-password':'current-password')+'"><button class="btn r">'+(s?'가입하기':'로그인')+'</button></form><p style="color:var(--mut)">'+(s?'이미 계정이 있나요?':'처음이세요?')+' <button class="chip" onclick="authMode=\''+(s?'login':'signup')+'\';render()">'+(s?'로그인':'회원가입')+'</button></p></div>';
+}
+function social(k){
+ var d=document.getElementById('dlg');if(d.open)return;
+ d.innerHTML='<h3 style="margin-top:0">'+PV[k][0]+'로 계속하기</h3><form class="f" style="max-width:none" onsubmit="return doSocial(\''+k+'\')"><p style="color:var(--mut);margin:0;font-size:13px">이메일과 비밀번호를 입력해 주세요. 처음이면 입력한 비밀번호로 계정이 만들어지고, 이미 계정이 있으면 그 비밀번호를 입력하면 돼요.</p><input id="se" type="email" required placeholder="이메일" autocomplete="email"><input id="sp" type="password" required minlength="8" placeholder="비밀번호 (8자 이상)" autocomplete="current-password"><div class="row"><button class="btn r">계속하기</button><button type="button" class="btn gh" onclick="document.getElementById(\'dlg\').close()">취소</button></div></form>';
+ d.showModal();
+}
+async function doSocial2(k){
+ var em=document.getElementById('se').value.trim().toLowerCase(),pw=document.getElementById('sp').value;
+ if(em.indexOf('@')<1){toast('올바른 이메일을 입력해 주세요');return}
+ if(pw.length<8){toast('비밀번호는 8자 이상이어야 해요');return}
+ var un=k+':'+em,u=db.users.find(function(x){return x.username===un}),s;
+ if(!u){s=newSalt();u={id:db.nid++,username:un,salt:s,pw:await hp(pw,s),nick:em.split('@')[0].slice(0,12),role:'user',provider:k,banned:false,joined:Date.now()};db.users.push(u)}
+ else if(!u.pw){s=newSalt();u.salt=s;u.pw=await hp(pw,s)}
+ else if(u.pw!==await hp(pw,u.salt)){toast('비밀번호가 맞지 않아요');return}
+ if(isBanned(u)){toast(banMsg(u));return}
+ db.session=u.id;save();document.getElementById('dlg').close();toast(u.nick+'님, 어서 오세요');go('home');render()
+}
+function doSocial(k){doSocial2(k);return false}
+async function doAuth2(f){
+ var un=f.u.value.trim(),pw=f.p.value;
+ if(authMode==='signup'){
+  if(un.toLowerCase()==='admin'||un.toLowerCase()===ADMIN_ID){toast('사용할 수 없는 아이디예요');return}
+  if(db.users.some(function(x){return x.username.toLowerCase()===un.toLowerCase()})){toast('이미 사용 중인 아이디예요');return}
+  var ph=digits(f.ph.value);if(sPhone!==ph){toast('휴대폰 인증을 완료해 주세요');return}
+  if(db.users.some(function(x){return x.phone===ph})){toast('이미 가입된 휴대폰 번호예요');return}
+  var s=newSalt(),u={id:db.nid++,username:un,salt:s,pw:await hp(pw,s),nick:f.n.value.trim(),phone:ph,pv:true,role:'user',provider:'local',banned:false,joined:Date.now()};db.users.push(u);db.session=u.id;save();toast('가입을 환영해요');go('home');render();return;
+ }
+ var u2=db.users.find(function(x){return x.username===un&&x.pw&&x.role!=='admin'});
+ if(!u2||u2.pw!==await hp(pw,u2.salt)){toast('아이디 또는 비밀번호가 맞지 않아요');return}
+ if(isBanned(u2)){toast(banMsg(u2));return}
+ db.session=u2.id;save();toast(u2.nick+'님, 어서 오세요');go('home');render()
+}
+function doAuth(f){doAuth2(f);return false}
+function sendVerify(v){phoneFlow(v,function(n){sPhone=n;var e=document.getElementById('phs');if(e)e.textContent='인증 완료 ✓ (번호를 바꾸면 다시 인증해 주세요)'})}
+function phoneFlow(v,done){
+ var n=digits(v);if(!/^01[016789]\d{7,8}$/.test(n)){toast('올바른 휴대폰 번호를 입력해 주세요');return}
+ if(db.users.some(function(x){return x.phone===n&&x.id!==db.session})){toast('이미 다른 계정에서 쓰는 번호예요');return}
+ var code=String(Math.floor(100000+Math.random()*900000)),d=document.getElementById('dlg');
+ d.innerHTML='<h3 style="margin-top:0">휴대폰 인증</h3><p style="margin:0 0 12px;color:var(--mut);font-size:13px">'+fmtPh(n)+' 번호로 인증번호를 보냈어요.<br>인증번호는 <b style="color:var(--red)">'+code+'</b> 입니다.</p><input id="pc" inputmode="numeric" maxlength="6" placeholder="인증번호 6자리" autocomplete="one-time-code"><div class="row" style="margin-top:12px"><button class="btn r" id="pok">확인</button><button class="btn gh" onclick="document.getElementById(\'dlg\').close()">취소</button></div>';
+ d.showModal();
+ function ok(){if(document.getElementById('pc').value.trim()!==code){toast('인증번호가 맞지 않아요');return}d.close();toast('휴대폰 인증이 완료됐어요');done(n)}
+ document.getElementById('pok').onclick=ok;
+ document.getElementById('pc').onkeydown=function(e){if(e.key==='Enter')ok()};
+}
+function phonePanel(msg){return '<div class="panel"><h2>휴대폰 인증</h2><p style="color:var(--mut)">'+msg+'</p><div class="row" style="flex-wrap:nowrap"><input id="pp" type="tel" inputmode="numeric" placeholder="010-1234-5678" aria-label="휴대폰 번호"><button class="btn r" onclick="phoneFlow(document.getElementById(\'pp\').value,function(n){var u=me();u.phone=n;u.pv=true;u.verifyReq=false;save();render()})">인증</button></div></div>'}
+var taps=[];
+function logoTap(e){
+ var u=me();
+ if(u&&u.role==='admin'){if(e)e.preventDefault();logoutDlg();return}
+ var n=Date.now();taps=taps.filter(function(t){return n-t<3500});taps.push(n);if(taps.length>=10){taps=[];adminDlg()}
+}
+function logoutDlg(){
+ var d=document.getElementById('dlg');if(d.open)return;
+ d.innerHTML='<h3 style="margin-top:0">로그아웃</h3><p style="color:var(--mut)">로그아웃 하시겠습니까?</p><div class="row"><button class="btn r" onclick="document.getElementById(\'dlg\').close();logout()">로그아웃</button><button class="btn gh" onclick="document.getElementById(\'dlg\').close()">취소</button></div>';
+ d.showModal();
+}
+function adminDlg(){
+ var d=document.getElementById('dlg');if(d.open)return;
+ var first=false;
+ d.innerHTML='<h3 style="margin-top:0">'+'관리자로 접속'+'</h3>'+(first?'<p style="color:var(--mut);font-size:13px">아직 관리자가 없어요. 입력한 아이디·비밀번호(8자 이상)로 관리자 계정이 만들어지고 바로 접속돼요.</p>':'')+'<form class="f" style="max-width:none" onsubmit="return adminLogin(this)"><input name="u" required minlength="3" placeholder="관리자 아이디" autocomplete="username" aria-label="관리자 아이디"><input name="p" type="password" required minlength="8" placeholder="비밀번호" autocomplete="'+(first?'new-password':'current-password')+'" aria-label="비밀번호"><div class="row"><button class="btn r">'+'관리자로 접속'+'</button><button type="button" class="btn gh" onclick="document.getElementById(\'dlg\').close()">닫기</button></div></form>';
+ d.showModal();
+}
+async function adminLogin2(f){
+ await ensureAdmin();
+ var un=f.u.value.trim(),pw=f.p.value,ad=db.users.find(function(x){return x.role==='admin'&&x.username===un});
+ if(!ad||ad.pw!==await hp(pw,ad.salt)){toast('관리자 정보가 맞지 않아요');return}
+ db.session=ad.id;save();document.getElementById('dlg').close();toast('관리자로 접속했어요');go('admin');render()
+}
+function adminLogin(f){adminLogin2(f);return false}
+function logout(){db.session=null;save();go('home');render()}
+var auid=null,pf='all',inqf='all',PL,IL,usq='';
+function dt(t){return new Date(t).toLocaleDateString('ko-KR')}
+function isBanned(u){if(u.status==='perm')return true;if(u.status==='susp'){if(Date.now()<u.until)return true;u.status='ok'}return false}
+function banMsg(u){return u.status==='perm'?'영구 정지된 계정이에요':'일시 정지된 계정이에요 ('+dt(u.until)+'까지)'}
+function stTag0(x){if(isBanned(x))return x.status==='perm'?'<span class="tag x">영구정지</span>':'<span class="tag x">일시정지 ~'+dt(x.until)+'</span>';if(x.status==='sellban')return '<span class="tag off">판매제한</span>';return '정상'}
+function stTag(x){return stTag0(x)+(x.verifyReq?' <span class="tag off">휴대전화 인증 요청중</span>':'')}
+function userList(){var q2=usq.trim().toLowerCase(),ds=digits(usq);return db.users.filter(function(x){if(!q2)return true;var pv=x.provider&&x.provider!=='local'?PV[x.provider][0]:'아이디';return [x.username,x.nick,pv,acctLabel(x)].join(' ').toLowerCase().indexOf(q2)>-1||(ds.length>=3&&String(x.phone||'').indexOf(ds)>-1)})}
+function userSearch(){var c=userList().length;return '<form class="row" style="flex-wrap:nowrap;margin-bottom:10px" onsubmit="usq=this.q.value;render();return false"><input name="q" type="search" enterkeyhint="search" placeholder="아이디·닉네임·휴대폰 번호로 회원 검색 (Enter)" value="'+esc(usq)+'" aria-label="회원 검색"><button class="btn r">검색</button>'+(usq?'<button type="button" class="btn gh" onclick="usq=\'\';render()">초기화</button>':'')+'</form><p style="margin:0 0 10px;color:var(--mut)">'+(usq?'검색 결과 ':'전체 회원 ')+num(c)+'명</p>'}
+function dashGo(t,f){atab=t;auid=null;if(t==='prod')pf=f||'all';if(t==='inq')inqf=f||'all';render()}
+function openUser(id){auid=id;render();scrollTo(0,0)}
+function chipsPf(){return '<div class="chips" style="margin-top:0">'+[['all','전체'],['used','중고'],['new','새상품']].map(function(c){return '<button class="chip '+(pf===c[0]?'on':'')+'" onclick="dashGo(\'prod\',\''+c[0]+'\')">'+c[1]+'</button>'}).join('')+'</div>'}
+function analyze(x){
+ var posts=db.products.filter(function(p){return p.seller===x.id&&p.type==='used'}),ords=db.orders.filter(function(o){return o.uid===x.id&&o.status!=='취소'}),
+ rec=db.reviews.filter(function(r){return r.to===x.id}),days=Math.max(0,Math.floor((Date.now()-x.joined)/864e5)),fl=[],id=String(x.username),
+ dg=(id.match(/\d/g)||[]).length,hist=(x.history||[]).filter(function(h){return h.act.indexOf('정상')!==0&&h.act!=='경고'||h.act==='경고'});
+ if(x.provider==='local'&&!x.pv)fl.push('휴대폰 미인증');
+ if(days<3&&posts.length>=5)fl.push('가입 3일 이내 판매글 '+posts.length+'개');
+ if(rec.length>=2&&tempOf(x.id)<30)fl.push('낮은 매너 온도 ('+tempOf(x.id)+'°C)');
+ if(hist.length>=2)fl.push('제재·경고 이력 '+hist.length+'회');
+ if(id.length>=6&&dg/id.length>=.7)fl.push('숫자 위주 아이디 (자동 생성 의심)');
+ if(x.provider==='local'&&db.users.some(function(o){return o.id!==x.id&&o.provider==='local'&&o.username.toLowerCase().replace(/\d/g,'')===id.toLowerCase().replace(/\d/g,'')&&id.replace(/\d/g,'').length>=3}))fl.push('비슷한 아이디의 다른 계정 존재 (다중 계정 의심)');
+ return{posts:posts,sold:posts.filter(function(p){return p.sold}).length,ords:ords,spent:ords.reduce(function(s,o){return s+o.total},0),rec:rec,days:days,flags:fl,idn:'길이 '+id.length+'자 · 숫자 '+Math.round(dg/Math.max(1,id.length)*100)+'% · '+(x.provider==='local'?'직접 가입':PV[x.provider][0]+' 연동'),rooms:db.rooms.filter(function(r){return r.a===x.id||r.b===x.id}).length,inqs:db.inq.filter(function(i){return i.uid===x.id}).length}
+}
+function userView(id){
+ var x=db.users.find(function(u){return u.id===id});if(!x)return '<div class="empty"><h2>회원을 찾을 수 없어요</h2></div>';
+ var a=analyze(x),isA=x.role==='admin',pv=x.provider&&x.provider!=='local'?PV[x.provider][0]:'아이디',
+ info=[['아이디',esc(x.username)],['닉네임',esc(x.nick)],['가입 경로',pv],['계정 유형',acctLabel(x)+(x.acctReq?' · '+ACL[x.acctReq.type]+' 요청 중 ('+dt(x.acctReq.date)+')':'')],['가입일',dt(x.joined)+' ('+num(a.days)+'일 전)'],['휴대폰',x.pv?fmtPh(x.phone):'미인증'],['따듯함 온도',tBadge(x.id)+' · 받은 평가 '+num(a.rec.length)+'건'],['판매글','중고 '+num(a.posts.length)+'개 (판매완료 '+num(a.sold)+')'],['구매',num(a.ords.length)+'건 · '+fmt(a.spent)],['채팅방',num(a.rooms)+'개'],['문의',num(a.inqs)+'건'],['최근 활동',lastAct(x.id)],['접속 환경',lastEnv(x.id)],['IP 주소','수집되지 않음 (서버 연동 필요)'],['현재 상태',stTag(x)+(x.reason?' · 사유: '+esc(x.reason):'')]];
+ return '<button class="chip" onclick="dashGo(\'user\')" style="margin-bottom:14px">← 회원 목록</button><div class="panel"><h2>'+esc(x.nick)+'님 분석</h2><table style="min-width:0">'+info.map(function(r){return '<tr><th style="width:110px;color:var(--mut)">'+r[0]+'</th><td>'+r[1]+'</td></tr>'}).join('')+'</table></div>'+
+ '<div class="panel"><h2>아이디 분석</h2><p style="margin:0 0 8px;color:var(--mut)">'+esc(x.username)+' · '+a.idn+'</p><div class="row">'+(a.flags.length?a.flags.map(function(f){return '<span class="tag x">'+esc(f)+'</span>'}).join(''):'<span class="tag off">특이사항 없음</span>')+'</div></div>'+
+ (isA?'<div class="panel"><p style="margin:0;color:var(--mut)">관리자 계정에는 제재를 줄 수 없어요.</p></div>':'<div class="panel"><h2>권한 부여·제재</h2><div class="f"><label>조치</label><select id="pa">'+opts(['정상(해제)','경고','판매 제한','일시정지','영구정지',SUS])+'</select><label>일시정지 기간</label><select id="pd"><option value="1">1일</option><option value="3">3일</option><option value="7" selected>7일</option><option value="30">30일</option></select><label>사유</label><textarea id="pr" rows="2" maxlength="200" placeholder="해제가 아닌 조치는 사유가 필요해요"></textarea><button class="btn red" onclick="applyPerm('+x.id+')">적용</button><button class="btn gh" onclick="delUser('+x.id+')">탈퇴 처리</button></div></div>')+
+ '<div class="panel"><h2>조치 이력</h2>'+((x.history||[]).length?x.history.slice().reverse().map(function(h){return '<p style="margin:0;padding:6px 0;border-bottom:1px solid var(--line)"><span class="tag">'+esc(h.act)+'</span> '+esc(h.why||'-')+' <small style="color:var(--mut)">'+dt(h.t)+'</small></p>'}).join(''):'<p style="margin:0;color:var(--mut)">이력이 없어요.</p>')+'</div>';
+}
+var SUS='의심스러운 활동 (휴대전화 인증 필요)';
+function sendMail(to,title,body){db.mails.push({id:db.nid++,to:to,from:'관리자',title:title,body:body,date:Date.now(),read:false})}
+function vNeedVerify(){return '<div class="panel"><h2>⚠️ 휴대전화 인증이 필요해요</h2><p style="margin:0;color:var(--mut)">의심스러운 활동이 확인되어 관리자가 추가 인증을 요청했어요. 아래에서 휴대전화 인증을 완료하면 다시 이용할 수 있어요.</p></div>'+phonePanel('인증할 휴대폰 번호를 입력해 주세요.')}
+function tot(){var u=me();if(!u)return 0;var nf=u.notif||{};return(nf.chat===false?0:allUnread())+(nf.mail===false?0:db.mails.filter(function(m){return m.to===u.id&&!m.read}).length)}
+function mailTabs(t){var u=me();if(!u)return '';var mc=db.mails.filter(function(m){return m.to===u.id&&!m.read}).length,cc=allUnread();return '<div class="tabs"><button class="chip '+(t==='mail'?'on':'')+'" onclick="go(\'mail\')">받은 메일'+(mc?' ('+num(mc)+')':'')+'</button><button class="chip '+(t==='chat'?'on':'')+'" onclick="go(\'chat\')">채팅'+(cc?' ('+num(cc)+')':'')+'</button></div>'}
+function vMail(){return mailTabs('mail')+vMail0()}
+function vMail0(){
+ var u=me();if(!u)return loginAsk();
+ var l=db.mails.filter(function(m){return m.to===u.id}).reverse();
+ return '<div class="panel"><h2>메일</h2>'+(l.length?l.map(function(m){return '<a href="#mail-'+m.id+'" class="row" style="padding:10px 0;border-top:1px solid var(--line);justify-content:space-between;flex-wrap:nowrap"><span style="min-width:0"><b>'+(m.read?'':'● ')+esc(m.title)+'</b><br><small style="color:var(--mut)">'+esc(m.from)+' · '+ago(m.date)+'</small></span>'+(m.read?'':'<span class="tag x">NEW</span>')+'</a>'}).join(''):'<div class="empty" style="padding:30px"><h2>받은 메일이 없어요</h2></div>')+'</div>'}
+function vMailView(id){
+ var u=me();if(!u)return loginAsk();var m=db.mails.find(function(x){return x.id===id&&x.to===u.id});
+ if(!m)return '<div class="empty"><h2>메일을 찾을 수 없어요</h2><a class="btn" href="#mail">메일함</a></div>';
+ m.read=true;save();
+ return '<a href="#mail" class="chip" style="display:inline-block;margin-bottom:14px">← 메일함</a><div class="panel"><h2>'+esc(m.title)+'</h2><p style="color:var(--mut);margin:0 0 12px">보낸 사람 '+esc(m.from)+' · '+new Date(m.date).toLocaleString('ko-KR')+'</p><p style="white-space:pre-wrap;margin:0">'+esc(m.body)+'</p></div>'}
+function applyPerm(id){
+ var x=db.users.find(function(u){return u.id===id}),a=document.getElementById('pa').value,days=+document.getElementById('pd').value,why=document.getElementById('pr').value.trim(),clear=a.indexOf('정상')===0;
+ if(!x||x.role==='admin')return;if(!clear&&!why){toast('사유를 입력해 주세요');return}
+ if(a==='영구정지'&&!confirm('영구정지는 로그인이 완전히 막혀요. 진행할까요?'))return;
+ var act=a,mt,mb,w=why?'\n사유: '+why:'';
+ if(clear){x.status='ok';x.until=0;x.reason='';x.verifyReq=false;act='정상 복구';mt='[안내] 이용 제한이 해제됐어요';mb='관리자가 회원님 계정의 제한을 해제했어요.'}
+ else if(a==='경고'){mt='[경고] 경고 조치가 취해졌어요';mb='관리자가 회원님의 계정에 경고 조치를 했어요.'+w+'\n경고가 누적되면 이용이 제한될 수 있어요.'}
+ else if(a==='판매 제한'){x.status='sellban';x.reason=why;mt='[판매 제한] 판매가 제한됐어요';mb='관리자가 회원님 계정의 판매를 제한했어요.'+w}
+ else if(a==='일시정지'){x.status='susp';x.until=Date.now()+days*864e5;x.reason=why;act='일시정지 '+days+'일';mt='[일시정지] 계정이 일시 정지됐어요';mb='관리자가 회원님 계정을 '+days+'일 동안 일시정지했어요. ('+dt(x.until)+'까지)'+w}
+ else if(a==='영구정지'){x.status='perm';x.reason=why;mt='[영구정지] 계정이 영구 정지됐어요';mb='관리자가 회원님 계정을 영구정지했어요.'+w}
+ else{x.verifyReq=true;x.pv=false;x.reason=why;act='의심스러운 활동';mt='[인증 요청] 휴대전화 인증이 필요해요';mb='회원님 계정에서 의심스러운 활동이 확인됐어요.'+w+'\n서비스를 계속 이용하려면 휴대전화 인증을 다시 완료해 주세요.'}
+ x.history=x.history||[];x.history.push({t:Date.now(),act:act,why:why});sendMail(x.id,mt,mb);save();toast('적용했어요. 해당 회원에게 메일을 보냈어요');render()
+}
+function delReview(id){if(!confirm('이 평가를 삭제할까요?'))return;db.reviews=db.reviews.filter(function(r){return r.id!==id});save();render()}
+function vAdmin(){
+ var u=me();if(!u||u.role!=='admin')return '<div class="empty"><h2>관리자 전용 방이에요</h2><a class="btn" href="#login">관리자로 로그인</a></div>';
+ var wait=db.inq.filter(function(x){return !x.ans}).length;
+ var T=[['dash','대시보드'],['act','실시간 활동'],['prod','상품 관리'],['user','회원 관리'],['ord','주문 관리'],['rev','매출'],['rv','거래 평가'],['inq','문의 관리'+(wait?' ('+num(wait)+')':'')]];
+ var h='<div class="tabs">'+T.map(function(t){return '<button class="chip '+(atab===t[0]?'on':'')+'" onclick="dashGo(\''+t[0]+'\')">'+t[1]+'</button>'}).join('')+'</div>';
+ PL=db.products.filter(function(p){return pf==='all'||p.type===pf});
+ if(atab==='dash'){
+  var logs24=(db.logs||[]).filter(function(l){return Date.now()-l.t<864e5}).length,rev=db.orders.filter(function(o){return o.status!=='취소'}).reduce(function(s,o){return s+o.total},0),ub=db.users.filter(isBanned).length,uu=db.products.filter(function(p){return p.type==='used'}),nn=db.products.filter(function(p){return p.type==='new'});
+  var S=[['회원',db.users.length,'정지 '+num(ub)+'명','user',''],['중고 글',uu.length,'판매완료 '+num(uu.filter(function(p){return p.sold}).length)+'개','prod','used'],['새상품',nn.length,'품절 '+num(nn.filter(function(p){return p.stock<1}).length)+'개','prod','new'],['주문',db.orders.length,'처리 대기 '+num(db.orders.filter(function(o){return o.status==='입금대기'||o.status==='결제완료'}).length)+'건','ord',''],['매출',fmt(rev),'상세 보기','rev',''],['거래 평가',db.reviews.length,'온도 평가 내역','rv',''],['실시간 활동',logs24,'최근 24시간 회원 활동','act',''],['답변 대기 문의',wait,'문의 보기','inq','wait']];
+  h+='<div class="stats">'+S.map(function(s){return '<button class="stat" style="text-align:left;border:0;cursor:pointer;color:var(--ink)" onclick="dashGo(\''+s[3]+'\',\''+s[4]+'\')"><span style="color:var(--mut)">'+s[0]+' ›</span><b>'+(typeof s[1]==='number'?num(s[1]):s[1])+'</b><small style="color:var(--mut)">'+s[2]+'</small></button>'}).join('')+'</div>';
+ }
+ if(atab==='act'){h+=actView()}
+ if(atab==='prod'){
+  photos=[];h+=chipsPf();
+  h+='<div class="panel"><h2>새상품 등록</h2><form class="row" onsubmit="return addNew(this)"><input name="t" placeholder="상품명" required style="flex:2;min-width:160px"><input name="pr" type="number" min="0" placeholder="가격" required style="flex:1;min-width:100px"><input name="s" type="number" min="0" placeholder="재고" required style="flex:1;min-width:80px"><select name="c" style="flex:1;min-width:110px">'+opts(CATS.slice(1))+'</select><select name="e" style="width:84px">'+opts(EMO)+'</select><input type="file" accept="image/*" multiple onchange="addPhotos(this)" style="flex:2;min-width:180px" aria-label="사진"><div id="pv" class="row" style="width:100%"></div><button class="btn r">등록</button></form></div>'+
+  '<div class="panel tw">'+(PL.length?'<table><tr><th>상품</th><th>구분</th><th>가격</th><th>재고·상태</th><th>관리</th></tr>'+PL.map(function(p){return '<tr><td>'+p.emoji+' '+esc(p.title)+'</td><td>'+(p.type==='new'?'새상품':'중고')+'</td><td>'+fmt(p.price)+'</td><td>'+(p.type==='new'?num(p.stock)+' <button class="btn sm gh" onclick="setStock('+p.id+')">수정</button>':(p.sold?'판매완료':'판매중'))+'</td><td><button class="btn sm red" onclick="delProd('+p.id+')">삭제</button></td></tr>'}).join('')+'</table>':'<p class="empty" style="padding:24px">등록된 상품이 없어요.</p>')+'</div>';
+ }
+ if(atab==='user'){
+  if(auid)h+=userView(auid);
+  else h+=userSearch()+'<div class="panel tw"><table><tr><th>아이디</th><th>닉네임</th><th>온도</th><th>가입 경로</th><th>휴대폰</th><th>상태</th><th></th></tr>'+userList().map(function(x){var pv=x.provider&&x.provider!=='local'?PV[x.provider][0]:'아이디';return '<tr><td>'+esc(x.username)+'</td><td>'+esc(x.nick)+(x.role==='admin'?' <span class="tag">관리자</span>':'')+(x.acctReq?' <span class="tag off">'+ACL[x.acctReq.type]+' 요청</span>':'')+'</td><td>'+tBadge(x.id)+'</td><td>'+pv+'</td><td>'+(x.pv?fmtPh(x.phone):'미인증')+'</td><td>'+stTag(x)+'</td><td>'+(x.id===u.id?'-':'<button class="btn sm gh" onclick="openUser('+x.id+')">분석·권한</button>')+'</td></tr>'}).join('')+'</table></div>';
+ }
+ if(atab==='ord'){
+  h+='<div class="panel tw">'+(db.orders.length?'<table style="min-width:700px"><tr><th>주문</th><th>주문자·배송지</th><th>내역</th><th>금액·결제</th><th>상태</th></tr>'+db.orders.slice().reverse().map(function(o){var i=o.info||{};return '<tr><td>#'+num(o.id)+'<br><small>'+ago(o.date)+'</small></td><td>'+esc(usr(o.uid))+'<br><small>'+esc(i.nm||'')+' '+esc(i.tl||'')+'<br>'+esc(i.ad||'')+'</small></td><td>'+o.items.map(function(x){return esc(x.title)+' x'+num(x.qty)}).join(', ')+'</td><td>'+fmt(o.total)+'<br><small>'+esc(o.pay||'')+'</small></td><td>'+(o.status==='취소'?'<span class="tag x">취소</span>':'<select onchange="setStatus('+o.id+',this.value)" style="width:130px" aria-label="주문 상태">'+opts(STS,o.status)+'</select>')+'</td></tr>'}).join('')+'</table>':'<p class="empty" style="padding:24px">아직 들어온 주문이 없어요.</p>')+'</div>';
+ }
+ if(atab==='rev'){
+  var by={},top={};db.orders.forEach(function(o){var b=by[o.status]=by[o.status]||[0,0];b[0]++;if(o.status!=='취소')b[1]+=o.total});
+  db.orders.filter(function(o){return o.status!=='취소'}).forEach(function(o){o.items.forEach(function(i){var t=top[i.title]=top[i.title]||[0,0];t[0]+=i.qty;t[1]+=i.price*i.qty})});
+  var tp=Object.keys(top).sort(function(a,b){return top[b][1]-top[a][1]}).slice(0,5);
+  h+='<div class="panel tw"><h2>상태별 주문</h2>'+(Object.keys(by).length?'<table style="min-width:0"><tr><th>상태</th><th>건수</th><th>금액</th></tr>'+Object.keys(by).map(function(k){return '<tr><td>'+k+'</td><td>'+num(by[k][0])+'건</td><td>'+fmt(by[k][1])+'</td></tr>'}).join('')+'</table>':'<p style="color:var(--mut)">주문이 없어요.</p>')+'</div><div class="panel tw"><h2>매출 상위 상품</h2>'+(tp.length?'<table style="min-width:0"><tr><th>상품</th><th>판매 수량</th><th>매출</th></tr>'+tp.map(function(k){return '<tr><td>'+esc(k)+'</td><td>'+num(top[k][0])+'개</td><td>'+fmt(top[k][1])+'</td></tr>'}).join('')+'</table>':'<p style="color:var(--mut)">아직 매출이 없어요.</p>')+'</div>';
+ }
+ if(atab==='rv'){
+  h+='<div class="panel tw">'+(db.reviews.length?'<table><tr><th>날짜</th><th>평가자 → 대상</th><th>온도</th><th>한마디</th><th></th></tr>'+db.reviews.slice().reverse().map(function(r){return '<tr><td>'+dt(r.date)+'</td><td>'+esc(usr(r.from))+' → '+esc(usr(r.to))+'</td><td><span class="tag" style="background:'+tColor(r.temp)+';color:#fff">'+r.temp+'°C</span></td><td>'+esc(r.text||'-')+'</td><td><button class="btn sm red" onclick="delReview('+r.id+')">삭제</button></td></tr>'}).join('')+'</table>':'<p class="empty" style="padding:24px">아직 거래 평가가 없어요.</p>')+'</div>';
+ }
+ if(atab==='inq'){
+  h+=(IL=db.inq.slice().reverse().filter(function(x){return inqf!=='wait'||!x.ans})).length?IL.map(function(x){return '<div class="panel"><span class="tag'+(x.ans?'':' x')+'">'+(x.ans?'답변완료':'답변대기')+'</span> <span class="tag off">'+x.cat+'</span> <b>'+esc(x.title)+'</b> <small style="color:var(--mut)">'+esc(usr(x.uid))+' · '+ago(x.date)+'</small><p style="margin:8px 0">'+esc(x.text)+'</p><textarea id="a'+x.id+'" rows="2" placeholder="답변을 입력하세요" aria-label="답변">'+esc(x.ans)+'</textarea><p style="margin:8px 0 0"><button class="btn sm r" onclick="ansInq('+x.id+')">'+(x.ans?'답변 수정':'답변 등록')+'</button></p></div>'}).join(''):'<div class="empty"><h2>들어온 문의가 없어요</h2></div>';
+ }
+ return h;
+}
+function ansInq(id){var x=db.inq.find(function(i){return i.id===id}),v=document.getElementById('a'+id).value.trim();if(!v){toast('답변을 입력해 주세요');return}x.ans=v;x.ansDate=Date.now();var rr=x.rid&&room(x.rid);if(rr){rr.msgs.push({from:db.session,text:'[답변] '+v,date:Date.now()});rr.seen=rr.seen||{};rr.seen[db.session]=rr.msgs.length}save();toast('답변을 등록했어요');render()}
+function addNew(f){var id=db.nid++;db.products.push({id:id,type:'new',title:f.t.value.trim(),price:+f.pr.value,cat:f.c.value,emoji:f.e.value,bg:BGS[id%4],region:'',area:'',imgs:photos.slice(),stock:+f.s.value,desc:'관리자가 등록한 새상품이에요.',seller:db.session,likes:0,sold:false,created:Date.now()});if(!save()){db.products.pop();return false}photos=[];toast('등록했어요');render();return false}
+function setStock(id){var v=prompt('새 재고 수량',prod(id).stock);if(v===null)return;prod(id).stock=Math.max(0,parseInt(v)||0);save();render()}
+function delUser(id){if(!confirm('이 회원을 탈퇴 처리할까요?'))return;db.users=db.users.filter(function(u){return u.id!==id});auid=null;save();render()}
+function setStatus(id,s){var o=db.orders.find(function(x){return x.id===id});if(s==='취소'){if(!confirm('주문을 취소하면 재고가 복구돼요. 진행할까요?')){render();return}restock(o)}o.status=s;save();toast('주문 상태를 바꿨어요');render()}
+function render(){
+ head();var v=location.hash.slice(1)||'home',a=document.getElementById('app'),h,vu=me();
+ if(vu&&vu.verifyReq&&['account','support','mail','login'].indexOf(v.split('-')[0])<0)h=vNeedVerify();else if(v.indexOf('detail-')===0)h=vDetail(+v.slice(7));
+ else if(v.indexOf('order-')===0)h=vOrder(+v.slice(6));
+ else if(v==='store')h=vStore();else if(v==='mail')h=vMail();else if(v.indexOf('mail-')===0)h=vMailView(+v.slice(5));else if(v==='chat')h=mailTabs('chat')+vChats();else if(v.indexOf('chat-')===0)h=vChat(+v.slice(5));else if(v==='account'||v.indexOf('account-')===0)h=vAccount(v.slice(8));else if(v==='cart')h=vCart();else if(v==='checkout')h=vCheckout();else if(v==='orders')h=vOrders();else if(v==='sell')h=vSell();else if(v==='me')h=vMe();else if(v==='support')h=vSupport();else if(v==='login')h=vLogin();else if(v==='admin')h=vAdmin();else h=vHome();
+ a.innerHTML=h;if(document.getElementById('gl'))list();if(document.getElementById('sl'))slist();if(v==='support')drawBot();if(v.indexOf('chat-')===0){drawChat(+v.slice(5));head()}if(v.indexOf('mail-')===0)head();
+}
+
+/* ===== 정책 문서 · 설정 확장 · 활동 기록 ===== */
+var DOCS={
+privacy:['개인정보처리방침','1. 수집하는 항목\n아이디, 닉네임, 비밀번호(암호화되어 저장), 휴대폰 번호, 배송지·연락처(주문 시), 서비스 이용 기록(로그인·판매·주문·채팅 이용 사실 등 활동 기록과 접속 환경)\n\n2. 이용 목적\n회원 식별과 가입 의사 확인, 휴대폰 인증, 중고·새상품 거래와 주문 처리, 고객 문의 응대, 부정 이용 방지와 안전한 거래 환경 유지\n\n3. 보유 기간\n회원 탈퇴 시 지체 없이 삭제합니다. 다만 전자상거래 등 관련 법령에 따라 보관해야 하는 거래 기록은 해당 기간 동안 보관합니다.\n\n4. 제3자 제공\n이용자의 동의 없이 개인정보를 제3자에게 제공하지 않습니다.\n\n5. 안전 조치\n비밀번호는 복호화할 수 없는 방식(해시)으로 저장하고, 관리자 기능은 권한이 있는 계정에서만 사용할 수 있도록 제한합니다. 채팅 내용은 활동 기록에 남기지 않습니다.\n\n6. 이용자의 권리\n설정 > 개인정보·내 데이터에서 내 정보를 확인하고 내려받을 수 있으며, 설정에서 닉네임 수정과 회원 탈퇴(삭제)를 할 수 있습니다.\n\n7. 문의\n고객센터 > 1:1 문의\n\n시행일: 2026년 11월 5일'],
+terms:['이용약관','제1조(목적)\n이 약관은 ㅇㅎ의 은밀한 방 물건 Store(이하 "서비스")의 이용 조건과 회원의 권리·의무를 정합니다.\n\n제2조(회원 가입)\n회원은 정확한 정보로 가입해야 하며, 판매글 등록은 휴대폰 인증을 마친 회원만 할 수 있습니다.\n\n제3조(거래)\n중고거래는 회원 간 직접 거래이며, 서비스는 거래 장소를 제공합니다. 거래 당사자는 상품 상태와 가격을 서로 확인하고 책임 있게 거래해야 합니다. 새상품은 서비스가 판매하며 주문·취소·배송은 주문내역에서 확인할 수 있습니다.\n\n제4조(금지 행위)\n허위 정보 등록, 사기·부정 거래, 타인의 정보 도용, 서비스 운영 방해, 법령에 위반되는 물품의 거래를 금지합니다.\n\n제5조(이용 제한)\n운영정책에 따라 경고, 판매 제한, 일시정지, 영구정지 등의 조치를 할 수 있으며, 조치 내용은 메일로 안내합니다.\n\n제6조(탈퇴)\n회원은 설정에서 언제든지 탈퇴할 수 있습니다.\n\n시행일: 2026년 11월 5일'],
+rules:['운영정책','거래 금지 물품\n위조품·불법 복제물, 의약품·주류·담배, 무기류, 타인의 개인정보, 법령으로 거래가 금지된 모든 물품\n\n금지 행위\n허위 매물, 가격 조작, 선입금 유도, 외부 연락처로 거래 유도, 타인 사칭, 평가 조작\n\n제재 단계\n경고 → 판매 제한 → 일시정지(1~30일) → 영구정지\n심각한 위반은 단계와 관계없이 바로 제재할 수 있습니다.\n\n의심스러운 활동\n계정에서 의심스러운 활동이 확인되면 휴대전화 인증을 다시 요청할 수 있으며, 인증을 마치기 전까지 서비스 이용이 제한됩니다.\n\n이의 신청\n제재에 이의가 있으면 고객센터 > 1:1 문의로 알려 주세요.'],
+safe:['안전거래 가이드','1. 직접 만나서 상품을 확인하고 거래하세요.\n2. 먼저 돈을 보내 달라는 요청에는 응하지 마세요.\n3. 서비스 밖의 메신저나 링크로 옮겨 가자는 제안은 조심하세요.\n4. 시세보다 지나치게 싸거나 급하게 재촉하면 한 번 더 의심하세요.\n5. 상대의 따듯함 온도와 받은 평가를 확인하세요.\n6. 문제가 생기면 고객센터 > 1:1 문의로 알려 주세요.']};
+function docDlg(k){var d=dlgEl(),x=DOCS[k];if(!x||d.open)return;d.innerHTML='<h3 style="margin-top:0">'+x[0]+'</h3><div style="max-height:60vh;overflow:auto;font-size:14px;line-height:1.75;white-space:pre-wrap">'+esc(x[1])+'</div><div class="row" style="margin-top:12px"><button class="btn gh" onclick="dlgEl().close()">닫기</button></div>';d.showModal()}
+function envStr(){var u=navigator.userAgent,b=/Edg\//.test(u)?'Edge':/Chrome\//.test(u)?'Chrome':/Firefox\//.test(u)?'Firefox':/Safari\//.test(u)?'Safari':'기타',o=/Windows/.test(u)?'Windows':/Android/.test(u)?'Android':/iPhone|iPad/.test(u)?'iOS':/Mac OS/.test(u)?'macOS':/Linux/.test(u)?'Linux':'기타';return b+' · '+o}
+function setNotif(k,v){var u=me();if(!u)return;u.notif=u.notif||{};u.notif[k]=v;save();head();toast(v?'알림을 켰어요':'알림을 껐어요')}
+async function exportMe(){var u=me();if(!u)return;
+ var data={계정:{아이디:u.username,닉네임:u.nick,가입일:new Date(u.joined).toISOString(),휴대폰:u.pv?fmtPh(u.phone):null,가입경로:u.provider},내_판매글:db.products.filter(function(p){return p.seller===u.id}).map(function(p){return{제목:p.title,가격:p.price,구분:p.type,등급:p.grade||null,판매완료:!!p.sold}}),주문:db.orders.filter(function(o){return o.uid===u.id}).map(function(o){return{번호:o.id,금액:o.total,상태:o.status}}),받은_평가:db.reviews.filter(function(r){return r.to===u.id}).map(function(r){return{온도:r.temp,한마디:r.text}}),메일:db.mails.filter(function(m){return m.to===u.id}).map(function(m){return{제목:m.title,내용:m.body,날짜:new Date(m.date).toISOString()}})};
+ try{var d=(typeof claude!=='undefined'&&claude.use)?await claude.use('downloads'):null;if(!d){toast('이 화면에서는 내려받기를 쓸 수 없어요');return}
+  await d.save({filename:'my-data.json',data:new Blob([JSON.stringify(data,null,2)],{type:'application/json'})})}
+ catch(e){if(!e||e.code!=='declined')toast('내려받기에 실패했어요')}}
+var ACL={user:'일반계정',seller:'판매자계정',admin:'관리자계정'};
+function acctKey(u){return u.role==='admin'?'admin':(u.acct==='seller'?'seller':'user')}
+function acctLabel(u){return ACL[acctKey(u)]}
+function vType(b,u){
+ var cur=acctKey(u),rq=u.acctReq,desc={user:'기본 이용 권한이에요. 바로 적용돼요.',seller:'판매 활동을 위한 계정이에요. 관리자에게 요청이 전달돼요.',admin:'운영 권한이에요. 관리자에게 요청이 전달돼요.'};
+ return b+'<div class="panel"><h2>계정 유형</h2><p style="margin:0 0 12px;color:var(--mut)">현재 계정 유형은 <b style="color:var(--ink)">'+ACL[cur]+'</b>이에요.'+(rq?' <span class="tag off">'+ACL[rq.type]+' 요청 중 · '+dt(rq.date)+'</span>':'')+'</p>'+
+ (u.role==='admin'?'<p style="margin:0;color:var(--mut)">관리자 계정은 유형을 바꿀 수 없어요.</p>':'<form class="f" onsubmit="return reqType(this)">'+Object.keys(ACL).map(function(k){return '<label class="row" style="padding:10px 12px;border:2px solid var(--line);border-radius:12px;cursor:pointer;flex-wrap:nowrap;color:var(--ink)"><input type="radio" name="t" value="'+k+'" style="width:20px;height:20px;flex:none;padding:0"'+(k===cur?' checked':'')+'><span><b>'+ACL[k]+'</b><br><small style="color:var(--mut)">'+desc[k]+'</small></span></label>'}).join('')+'<button class="btn r">권한요청</button></form>')+'</div>';
+}
+function reqType(f){
+ var u=me(),el=f.querySelector('input[name=t]:checked'),t=el?el.value:'';
+ if(!u||u.role==='admin')return false;
+ if(!t){toast('계정 유형을 골라 주세요');return false}
+ if(t===acctKey(u)&&!u.acctReq){toast('이미 '+ACL[t]+'이에요');return false}
+ if(t==='user'){u.acct='user';u.acctReq=null;save();toast('일반계정으로 바뀌었어요');render();return false}
+ if(u.acctReq&&u.acctReq.type===t){toast('이미 요청한 권한이에요. 관리자의 확인을 기다려 주세요');return false}
+ u.acctReq={type:t,date:Date.now()};
+ db.mails.push({id:db.nid++,to:adminId(),from:u.nick+' ('+u.username+')',title:'[권한 요청] '+u.nick+'님이 '+ACL[t]+' 권한을 요청했어요',body:u.nick+' ('+u.username+') 회원이 '+ACL[t]+' 권한을 요청했어요.\n현재 계정 유형: '+ACL[acctKey(u)]+'\n요청 일시: '+new Date().toLocaleString('ko-KR')+'\n\n관리자 페이지 > 회원 관리에서 해당 회원을 확인해 주세요.',date:Date.now(),read:false});
+ save();toast('관리자에게 권한이 요청됐어요');render();return false
+}
+function vAccountX(k,b,u){
+ if(k==='type')return vType(b,u);
+ if(k==='sessions'){var l=(db.logs||[]).filter(function(x){return x.uid===u.id&&['로그인','회원가입','관리자 접속'].indexOf(x.act)>-1}).slice(-10).reverse();
+  return b+'<div class="panel"><h2>로그인 기록</h2><p style="color:var(--mut);margin:0 0 8px">현재 접속 환경: '+esc(envStr())+'</p>'+(l.length?'<table style="min-width:0">'+l.map(function(x){return '<tr><td>'+new Date(x.t).toLocaleString('ko-KR',{hour12:false})+'</td><td>'+esc(x.act)+'</td><td>'+esc(x.env)+'</td></tr>'}).join('')+'</table>':'<p style="margin:0;color:var(--mut)">기록이 아직 없어요.</p>')+'<p style="color:var(--mut);font-size:13px;margin:10px 0 0">본인이 아닌 로그인이 보이면 바로 비밀번호를 바꿔 주세요.</p></div>'}
+ if(k==='notify'){var nf=u.notif||{};return b+'<div class="panel"><h2>알림 설정</h2>'+[['mail','메일 알림','운영 안내·제재 안내 메일이 오면 상단 메일 메뉴에 표시해요'],['chat','채팅 알림','새 채팅 메시지가 오면 상단 메일 메뉴에 표시해요']].map(function(r){return '<label class="row" style="padding:10px 0;border-top:1px solid var(--line);justify-content:space-between;flex-wrap:nowrap;cursor:pointer"><span><b>'+r[1]+'</b><br><small style="color:var(--mut)">'+r[2]+'</small></span><input type="checkbox" style="width:22px;height:22px" '+(nf[r[0]]===false?'':'checked')+' onchange="setNotif(\''+r[0]+'\',this.checked)"></label>'}).join('')+'</div>'}
+ if(k==='privacy')return b+'<div class="panel"><h2>개인정보·내 데이터</h2><p style="color:var(--mut);margin:0 0 10px">서비스가 보관하는 내 정보는 아이디, 닉네임, 휴대폰 번호, 주문·판매·평가·메일 내역이에요. 비밀번호는 암호화되어 저장돼 나도 볼 수 없어요.</p><div class="row"><button class="btn" onclick="exportMe()">내 데이터 내려받기</button><button class="btn gh" onclick="docDlg(\'privacy\')">개인정보처리방침</button></div></div>'
+ if(k==='policy')return b+'<div class="panel"><h2>약관 및 정책</h2>'+[['privacy','개인정보처리방침'],['terms','이용약관'],['rules','운영정책'],['safe','안전거래 가이드']].map(function(r){return '<button class="row" style="width:100%;background:none;border:0;border-top:1px solid var(--line);justify-content:space-between;padding:12px 0;cursor:pointer;font:inherit;color:inherit" onclick="docDlg(\''+r[0]+'\')"><span>'+r[1]+'</span><span>›</span></button>'}).join('')+'</div>'
+ if(k==='about')return b+'<div class="panel"><h2>서비스 정보</h2><table style="min-width:0"><tr><th style="width:110px;color:var(--mut)">서비스</th><td>ㅇㅎ의 은밀한 방 물건 Store</td></tr><tr><th style="color:var(--mut)">버전</th><td>1.5</td></tr><tr><th style="color:var(--mut)">최근 업데이트</th><td>2026년 11월 6일</td></tr><tr><th style="color:var(--mut)">문의</th><td><a href="#support" style="text-decoration:underline">고객센터</a></td></tr></table></div>'
+ return null}
+var afu='all';
+function lastAct(id){var l=(db.logs||[]).filter(function(x){return x.uid===id}).pop();return l?esc(l.act)+' · '+ago(l.t):'기록 없음'}
+function lastEnv(id){var l=(db.logs||[]).filter(function(x){return x.uid===id}).pop();return l?esc(l.env):'기록 없음'}
+function actView(){
+ var all=db.logs||[],l=all.slice().reverse().filter(function(x){return afu==='all'||String(x.uid)===afu}).slice(0,150);
+ return '<div class="panel"><div class="row" style="justify-content:space-between"><b>● 실시간 활동 내역</b><span style="color:var(--mut);font-size:13px">총 '+num(all.length)+'건 · 같은 브라우저의 다른 창에서 일어난 활동은 바로 갱신돼요</span></div><p style="color:var(--mut);font-size:13px;margin:8px 0">이 화면은 현재 브라우저에 기록된 활동을 보여줘요. 채팅 내용은 기록하지 않고, IP 주소는 서버 연동 후에 수집할 수 있어요.</p><select aria-label="회원 필터" onchange="afu=this.value;render()" style="max-width:260px"><option value="all">전체 회원</option>'+db.users.map(function(u){return '<option value="'+u.id+'"'+(String(u.id)===afu?' selected':'')+'>'+esc(u.nick)+' ('+esc(u.username)+')</option>'}).join('')+'</select></div><div class="panel tw">'+(l.length?'<table style="min-width:680px"><tr><th>시간</th><th>회원</th><th>활동</th><th>상세</th><th>접속 환경</th></tr>'+l.map(function(x){return '<tr><td>'+new Date(x.t).toLocaleString('ko-KR',{hour12:false})+'<br><small style="color:var(--mut)">'+ago(x.t)+'</small></td><td>'+esc(x.nick)+'<br><small style="color:var(--mut)">'+esc(x.un)+'</small></td><td><span class="tag">'+esc(x.act)+'</span></td><td>'+esc(x.info)+'</td><td>'+esc(x.env)+'</td></tr>'}).join('')+'</table>':'<p class="empty" style="padding:24px">아직 기록된 활동이 없어요.</p>')+'</div>'}
+function sig(){var u=me(),lk=0,ct=0;db.products.forEach(function(p){lk+=(p.likedBy||[]).length});Object.keys(db.carts||{}).forEach(function(k){ct+=(db.carts[k]||[]).length});
+ return [db.products.length,db.orders.length,db.rooms.length,db.rooms.reduce(function(s,r){return s+r.msgs.length},0),db.reviews.length,db.inq.length,db.users.length,db.mails.length,db.session,lk,ct,u?u.nick+u.pv+u.status+String(u.pw).slice(-6):'',db.orders.map(function(o){return o.status}).join(),db.products.filter(function(p){return p.sold}).length,db.products.reduce(function(s,p){return s+(p.stock||0)},0)].join('|')}
+function logAct(u,act,info){db.logs.push({t:Date.now(),uid:u?u.id:0,nick:u?u.nick:'(비회원)',un:u?u.username:'',act:act,info:info||'',env:envStr()});if(db.logs.length>600)db.logs=db.logs.slice(-600);save()}
+function trace(name,label,det){var o=window[name];if(typeof o!=='function')return;
+ window[name]=function(){var b=sig(),u0=me(),n0=db.users.length,r=o.apply(this,arguments),fin=function(){if(sig()===b)return;var lb=typeof label==='function'?label(n0):label,u1=(lb==='로그아웃'||lb==='회원 탈퇴')?u0:(me()||u0);logAct(u1,lb,det?det():'')};
+  if(r&&typeof r.then==='function')return r.then(function(x){fin();return x});fin();return r}}
+var lastP=function(){var p=db.products[db.products.length-1];return p?p.title:''},lastO=function(){var o=db.orders[db.orders.length-1];return o?'주문 #'+num(o.id)+' · '+fmt(o.total):''};
+trace('doAuth2',function(n0){return db.users.length>n0?'회원가입':'로그인'});trace('doSocial2',function(n0){return db.users.length>n0?'회원가입':'로그인'});
+trace('adminLogin2','관리자 접속');trace('logout','로그아웃');trace('delMe','회원 탈퇴');
+trace('doSell','중고 판매글 등록',lastP);trace('addNew','새상품 등록 (관리자)',lastP);trace('delProd','상품 삭제');
+trace('toggleSold','판매중으로 변경');trace('finishSale','판매완료 처리');trace('like','관심 등록/취소');
+trace('addCart','장바구니 담기');trace('rmCart','장바구니 삭제');trace('doOrder','주문',lastO);trace('cancelOrder','주문 취소');trace('setStatus','주문 상태 변경 (관리자)');
+trace('chat','채팅방 열기');trace('sendChat','채팅 메시지 전송',function(){return '내용은 기록하지 않아요'});trace('sendRate','거래 평가');
+trace('doInq','1:1 문의 등록');trace('ansInq','문의 답변 (관리자)');trace('saveNick','닉네임 변경');trace('savePw2','비밀번호 변경');trace('phoneFlow','휴대폰 인증');
+trace('applyPerm','회원 조치 (관리자)');trace('buyOffer','채팅으로 구매 확정');trace('reqType','계정 유형 권한 요청');trace('delUser','회원 삭제 (관리자)');trace('setStock','재고 수정 (관리자)');
+addEventListener('storage',function(e){if(e.key!=='oh_db_v3'||!e.newValue)return;try{db=JSON.parse(e.newValue)}catch(x){return}var u=me();if(u&&u.role==='admin'&&atab==='act'&&location.hash==='#admin')render();else head()});
+addEventListener('hashchange',function(){render();scrollTo(0,0)});
+render();
+</script>
+</body>
+</html>
